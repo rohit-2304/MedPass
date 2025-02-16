@@ -1,21 +1,25 @@
 const express = require("express");
 const app = express();
 require('dotenv').config();
-require('./Models/db.js');
 
-const PORT =process.env.PORT || 8080;
 const cors = require('cors');
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+// const authRoutes = require('./routes/api');
 
-app.use(express.json());
-app.use(cors());
-app.get("/",(req,res)=>{
-
-    res.send("ew32");
-});
+const PORT = process.env.PORT || 3000;
+MONGO_URL = "mongodb://127.0.0.1:27017/MedPass_data";
+// app.use(cors());
+app.use(bodyParser.json());
 
 
+// app.use('/api/auth',authRoutes);
+
+mongoose.connect(process.env.MONGO_URL||MONGO_URL).then(()=>{console.log("Connected to database")}).catch(()=>{
+        console.error("error in connecting to database");
+    })
 
 
 app.listen(PORT,()=>{
-    console.log('Server is runnong on port 8080')
-});
+    console.log(`Server is running on port ${PORT}`)
+})

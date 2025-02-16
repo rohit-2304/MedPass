@@ -6,6 +6,8 @@ import Home from './components/home/home.jsx';
 import Login from './components/login/login.jsx';
 
 import Navbar from './components/navbar/navbar.jsx'; 
+import Register from './components/register/register.jsx';
+import Aboutus from './components/aboutus/aboutus.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -14,6 +16,8 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/aboutus" element={<Aboutus />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

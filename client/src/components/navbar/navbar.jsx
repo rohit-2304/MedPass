@@ -10,12 +10,12 @@ function Navbar() {
     </div>
     <div className='grid grid-cols-[auto_auto_2fr] gap-8 items-center'>
         <div className='text-sm font-medium underline'><Link to="/">Home</Link></div>
-        <div className='text-sm font-medium underline'><Link to="/">Aboutus</Link></div>
+        <div className='text-sm font-medium underline'><Link to="/aboutus">Aboutus</Link></div>
 
 
         <div className='grid grid-cols-[50px_50px] place-content-end mr-3'>
         <div className='text-sm font-medium underline '><Link to="/login">Login</Link> /</div>
-        <div className='text-sm font-medium underline'><Link to="/login">Register</Link></div>
+        <div className='text-sm font-medium underline'><Link to="/register">Register</Link></div>
         </div>
     </div>
 </nav>

@@ -2,10 +2,10 @@ import React from 'react';
 import {Link } from 'react-router-dom';
 function Navbar() {
   return (
-    <nav className='medpass-nav h-16 bg-blue-300 grid grid-cols-[200px_1fr]'>
+    <nav className='medpass-nav h-16 bg-blue-100 grid grid-cols-[200px_1fr] '>
     <div className='medpass-nav-home grid grid-cols-[75px_1fr] gap-0.5 items-center text-blue-800'>
         <Link to="/">
-            <img className="h-12 w-24 object-cover" src="/src/assets/MedPass-logo-removebg-preview.png" alt="medpass" />
+            <img className="medpass-img w-40 h-16 object-conta" src="/src/assets/med-pass-cropped.png" alt="medpass" />
         </Link>
     </div>
     <div className='grid grid-cols-[auto_auto_2fr] gap-8 items-center'>

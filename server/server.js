@@ -1,21 +1,21 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
-require('dotenv').config();
 
 const cors = require('cors');
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-// const authRoutes = require('./routes/api');
+const authRoutes = require('./routes/auth');
 
-const PORT = process.env.PORT || 3000;
-MONGO_URL = "mongodb://127.0.0.1:27017/MedPass_data";
-// app.use(cors());
 app.use(bodyParser.json());
+const PORT = process.env.PORT || 3000;
+const MONGO_URL =  process.env.MONGO_ATLAS_URL;
+app.use(cors());
 
 
-// app.use('/api/auth',authRoutes);
+ app.use('/api/auth',authRoutes);
 
-mongoose.connect(process.env.MONGO_URL||MONGO_URL).then(()=>{console.log("Connected to database")}).catch(()=>{
+mongoose.connect(MONGO_URL).then(()=>{console.log("Connected to database")}).catch(()=>{
         console.error("error in connecting to database");
     })
 

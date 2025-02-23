@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../Models/user');
 const router = express.Router();
 
-router.post('/register',async (req,res)=>{
+
+router.post('/register/patient',async (req,res)=>{
 try{
     const {username,password} = req.body;
     const user = new User({username,password});
@@ -15,8 +16,8 @@ try{
     res.status(500).send('Error registering user');
 }
 });
-router.post('/login',async (req,res)=>{
-    try{
+router.post('/login/patient',async (req,res)=>{
+    try{ 
         const {username,password}= req.body;
         const user = await User.findOne({username});
         if(!user || !await user.isValidPassword(password)){

@@ -4,9 +4,11 @@ import { BrowserRouter, Routes, Route,Link } from 'react-router-dom';
 import './index.css';
 import Home from './components/home/home.jsx';
 import Login from './components/login/login-patient.jsx';
+import LoginD from './components/login/login-doctor.jsx';
+import RegisterD from './components/register/register-doctor.jsx';
 
 import Navbar from './components/navbar/navbar.jsx'; 
-import Register from './components/register/register.jsx';
+import Register from './components/register/register-patient.jsx';
 import Aboutus from './components/aboutus/aboutus.jsx';
 import Pt_db from './components/patient-dashboard/pt_db.jsx';
 
@@ -18,7 +20,9 @@ createRoot(document.getElementById('root')).render(
         
         <Route path="/" element={<Home />} />
         <Route path="/login/patient" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login/doctor" element={<LoginD />} />
+        <Route path="/register/patient" element={<Register />} />
+        <Route path="/register/doctor" element={<RegisterD />} />
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/home" element={<Home />} />
         <Route path="/pt_db" element={<Pt_db />} />

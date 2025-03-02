@@ -11,6 +11,7 @@ import Navbar from './components/navbar/navbar.jsx';
 import Register from './components/register/register-patient.jsx';
 import Aboutus from './components/aboutus/aboutus.jsx';
 import Pt_db from './components/patient-dashboard/pt_db.jsx';
+import Dt_db from './components/doctor-dashboard/dt_db.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/home" element={<Home />} />
         <Route path="/pt_db" element={<Pt_db />} />
+        <Route path="/dt_db" element={<Dt_db />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

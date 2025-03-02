@@ -27,10 +27,13 @@ const Login = () => {
 
   return (
     <div className='h-[100vh] w-[100vw] bg-[url(src/assets/background-login.jpg)] bg-cover bg-top'>
-      <div className='absolute mt-[10%] ml-[60%] w-[350px] h-[280px] border-2 rounded-md border-gray-500'>
+      <div className='absolute mt-[10%] ml-[60%] w-[350px] h-[290px] border-2 rounded-md border-gray-500'>
         <div className='flex justify-center align'>
-          <img className='medpass-img w-16 h-16 object-conta' src='/src/assets/med-pass-cropped.png' alt='medpass' />
+        
+      <img className='medpass-img w-16 h-16 object-conta' src='/src/assets/med-pass-cropped.png' alt='medpass' />
+      
         </div>
+        <div className=' ml-4 mb-2 text-md font-medium'>Login as patient:</div>
         <form onSubmit={handleLogin}>
           <label htmlFor='Username' className='ml-4 text-red-900'>Username:</label>
           <input

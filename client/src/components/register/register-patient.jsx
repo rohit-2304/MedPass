@@ -13,6 +13,7 @@ const Register = () => {
     const validatePassword=(password)=>{
         const minlength = 8;
         const hasnumber =/\d/;
+        if(username.length<6) return 'Username must contain atleast 6 character';
         if(password.length<8) return 'Password must contain atleast 8 character';
         if (!hasnumber.test(password)) return 'Password must have a number';
        
@@ -25,7 +26,7 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const errPass = validatePassword(password);
+            const errPass = validatePassword(password,username);
             if(errPass){
                 setMessage(errPass);
                 return;

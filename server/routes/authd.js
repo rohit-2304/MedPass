@@ -8,7 +8,7 @@ router.post('/register/doctor', async (req, res) => {
         const { username, password, registration_no, year, council } = req.body;
         const Doctor1 = new Doctor({username,registration_no,council,year,password});
         await Doctor1.save();
-        res.status(201).send('Doctor registered');
+        res.status(201).send(`Doctor registered`);
     } catch (err) {
         console.error('Error registering Doctor:', err); // Log the error for debugging
         res.status(500).send('Error registering Doctor');

@@ -13,9 +13,10 @@ const RegisterD = () => {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
-    const validatePassword=(password)=>{
-        const minlength = 8;
+    const validatePassword=(password,username)=>{
+    
         const hasnumber =/\d/;
+        if(username.length<6) return 'Username must contain atleast 6 character';
         if(password.length<8) return 'Password must contain atleast 8 character';
         if (!hasnumber.test(password)) return 'Password must have a number';
        
@@ -35,7 +36,7 @@ const RegisterD = () => {
 const handleRegister = async (e) => {
   e.preventDefault();
   try {
-      const errPass = validatePassword(password);
+      const errPass = validatePassword(password,username);
       if (errPass) {
           setMessage(errPass);
           return;
@@ -55,11 +56,11 @@ const handleRegister = async (e) => {
       };
 
       const doctorResponse = await axios.request(options);
-      console.log('Doctor verification response:', doctorResponse.data);
+    
 
       // Adjust the filter to match the correct data structure and types
       const Doctor = doctorResponse.data.filter(item => 
-          item.smcName === council && 
+          item.smcName.toLowerCase() === council.toLowerCase() && 
           item.registrationNo === registration_no.toString() && 
           item.yearOfPassing === year.toString()
       );
@@ -68,8 +69,8 @@ const handleRegister = async (e) => {
 
       if (Doctor.length !== 0) {
           const response = await axios.post(`http://localhost:5001/api/authd/register/doctor`,{username,password,registration_no,year,council});
-          console.log('Registration response:', response.data);
-          setMessage('Registration successful!');
+   
+          setMessage('Registration successful!$');
           navigate('/login/doctor');
       } else {
           setMessage('Doctor verification failed. Please check your details.');
@@ -82,37 +83,48 @@ const handleRegister = async (e) => {
 
 
     return (
-      <div className='h-[100vh] w-[100vw] bg-[url(src/assets/background-login.jpg)] bg-cover bg-top'>
-      <div className='absolute mt-[10%] ml-[60%] w-[350px] h-[450px] border-2 rounded-md border-gray-500'>
-          <div className='flex justify-center align'>
-              <img className="medpass-img w-16 h-16 object-contain" src="/src/assets/med-pass-cropped.png" alt="medpass" />
+        <div className='h-[100vh] w-[100vw] bg-[url(src/assets/background-login.jpg)] bg-cover bg-top'>
+        <div className='absolute mt-8  top-[10%] left-[60%] w-[375px] border-2 rounded-md border-gray-500 shadow-lg bg-white bg-opacity-90'>
+          <div className='flex justify-center mt-4'>
+            <img className="medpass-img w-16 h-16 object-contain" src="/src/assets/med-pass-cropped.png" alt="medpass" />
           </div>
-          <div className='ml-4 mb-2 text-md font-medium'>Register as Doctor:</div>
-          <form onSubmit={handleRegister}>
-              <label htmlFor="Username" className='ml-4 text-red-900'>Username:</label>
-              <input type="text" value={username} placeholder='Username' required onChange={(e) => { setUsername(e.target.value) }} autoComplete='off' id="Username" className='ml-2 border text-gray-500 pl-2' />
-
-              <label htmlFor="password" className='ml-4 text-red-900'>Password:</label>
-              <input type="password" value={password} placeholder='Password' required onChange={(e) => { setPassword(e.target.value) }} autoComplete='off' id="password" className='ml-3 border text-gray-500 pl-2 mt-4' />
-
-              <label htmlFor="council" className='ml-4 text-red-900'>Council Name:</label>
-              <input type="text" value={council} placeholder='Council Name' required onChange={(e) => { setCouncil(e.target.value) }} autoComplete='off' id="council" className='ml-2 border text-gray-500 pl-2 mt-4' />
-
-              <label htmlFor="year" className='ml-4 text-red-900'>Year of Passing:</label>
-              <input type="number" value={year} placeholder='Year of Passing' required onChange={(e) => { setYear(e.target.value) }} autoComplete='off' id="year" className='ml-3 border text-gray-500 pl-2 mt-4' />
-
-              <label htmlFor="registration_no" className='ml-4 text-red-900'>Registration Number:</label>
-              <input type="text" value={registration_no} placeholder='Registration Number' required onChange={(e) => { setRegistration_no(e.target.value) }} autoComplete='off' id="registration_no" className='ml-3 border text-gray-500 pl-2 mt-4' />
-
-              <div className='flex justify-center'>
-                  <button type='submit' className='border text-md text-gray-600 font-bold w-[60px] h-[30px] rounded-md bg-green-100 hover:bg-green-200 mt-6'>Signup</button>
-              </div>
+          <div className='ml-4 mb-2 text-lg font-semibold text-gray-800 '>Register as Doctor:</div>
+          <form onSubmit={handleRegister} className='space-y-4'>
+            <div className='ml-4 mr-4'>
+              <label htmlFor="Username" className='block text-red-900'>Username:</label>
+              <input type="text" value={username} placeholder='Username' required onChange={(e) => { setUsername(e.target.value) }} autoComplete='off' id="Username" className='mt-1 border w-full px-3 py-2 text-gray-700 rounded-md focus:outline-none focus:border-blue-500' />
+            </div>
+      
+            <div className='ml-4 mr-4'>
+              <label htmlFor="password" className='block text-red-900'>Password:</label>
+              <input type="password" value={password} placeholder='Password' required onChange={(e) => { setPassword(e.target.value) }} autoComplete='off' id="password" className='mt-1 border w-full px-3 py-2 text-gray-700 rounded-md focus:outline-none focus:border-blue-500' />
+            </div>
+      
+            <div className='ml-4 mr-4'>
+              <label htmlFor="council" className='block text-red-900'>Council Name:</label>
+              <input type="text" value={council} placeholder='Council Name' required onChange={(e) => { setCouncil(e.target.value) }} autoComplete='off' id="council" className='mt-1 border w-full px-3 py-2 text-gray-700 rounded-md focus:outline-none focus:border-blue-500' />
+            </div>
+      
+            <div className='ml-4 mr-4'>
+              <label htmlFor="year" className='block text-red-900'>Year of Passing:</label>
+              <input type="number" value={year} placeholder='Year of Passing' required onChange={(e) => { setYear(e.target.value) }} autoComplete='off' id="year" className='mt-1 border w-full px-3 py-2 text-gray-700 rounded-md focus:outline-none focus:border-blue-500' />
+            </div>
+      
+            <div className='ml-4 mr-4'>
+              <label htmlFor="registration_no" className='block text-red-900'>Registration Number:</label>
+              <input type="text" value={registration_no} placeholder='Registration Number' required onChange={(e) => { setRegistration_no(e.target.value) }} autoComplete='off' id="registration_no" className='mt-1 border w-full px-3 py-2 text-gray-700 rounded-md focus:outline-none focus:border-blue-500' />
+            </div>
+      
+            <div className='flex justify-center'>
+              <button type='submit' className='border text-md text-white font-bold w-[80px] h-[35px] rounded-md bg-blue-500 hover:bg-blue-600 focus:outline-none mt-6'>Signup</button>
+            </div>
           </form>
-          <div className='flex justify-center text-sm text-red-700'>
-              {message && <p>{message}</p>}
+          <div className='flex justify-center text-sm text-red-700 mt-4'>
+            {message && <p>{message}</p>}
           </div>
+        </div>
       </div>
-  </div>
+      
     );
 };
 

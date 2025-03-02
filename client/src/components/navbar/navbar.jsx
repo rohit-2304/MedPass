@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+
 function Navbar() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const location = useLocation(); // Get the current location
 
+  const removeToken=()=>{
+    localStorage.removeItem("token");
+  }
   useEffect(() => {
     const handleStorageChange = () => {
       const newToken = localStorage.getItem('token');
@@ -28,6 +32,10 @@ function Navbar() {
         {token ? (
           <div className='text-sm font-medium underline ml-10 mt-5'><Link to="/aboutus">About Us</Link></div>
         ) : null}
+          {token?  <div className='absolute ml-[95%] text-sm font-medium underline flex'>
+            <img  className="h-[20px] w-[20px]" src="src/assets/profile.png" alt=" " />
+         <a href="/" onClick={removeToken} className='no-underline'>logout</a>
+</div>:null}
       </div>
       {token ? null : (
         <div className='grid grid-cols-[auto_auto_2fr] gap-8 items-center'>
@@ -39,6 +47,8 @@ function Navbar() {
           </div>
         </div>
       )}
+    
+    
     </nav>
   );
 }

@@ -24,7 +24,7 @@ router.post('/login/patient',async (req,res)=>{
            return res.status(401).send('Invalid username or password')
         }
         const token = jwt.sign({id:user._id},'your_secret_token',{expiresIn:'1h'});
-        res.status(200).json({token});
+        res.status(200).json({token,username});
         
 
     }

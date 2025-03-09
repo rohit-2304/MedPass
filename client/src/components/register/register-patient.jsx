@@ -31,10 +31,10 @@ const Register = () => {
                 setMessage(errPass);
                 return;
             }
-      
+            
             const response = await axios.post(`http://localhost:${PORT}/api/auth/register/patient`, { username, password });
            
-            setMessage('Registration successful!'); navigate('/login/patient');}
+            setMessage('Registration successful!');navigate(`/patient_info/${username}`)}
          catch (err) {
             setMessage('Registration failed !!! Username already used');
         }

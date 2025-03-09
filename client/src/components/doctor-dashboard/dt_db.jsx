@@ -3,18 +3,20 @@ import { useNavigate } from 'react-router-dom';
 
 function Dt_db() {
     const navigate = useNavigate();
-    const [token, setToken] = useState(null);
+    const [tokend, setToken] = useState(null);
 
     useEffect(() => {
             const handleStorageChange = () => {
-                const newToken = localStorage.getItem('token');
+                const newToken = localStorage.getItem('tokend');
                 setToken(newToken);
-                if(!token){
+                if(!newToken ){
+                    localStorage.removeItem('token');
                     navigate('/home')
                 }
             };
     
             window.addEventListener('storage', handleStorageChange);
+            handleStorageChange();
     
             return () => {
                 window.removeEventListener('storage', handleStorageChange);

@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const authRoutes = require('./routes/auth');
 const authRoutesd = require('./routes/authd');
+const patient_info = require('./routes/patientInfo');
 
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
@@ -14,8 +15,9 @@ app.use(cors());
 
 app.use('/api/authd', authRoutesd);
 app.use('/api/auth', authRoutes);
+app.use('/api/patients',patient_info);
 
-mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URL, { useUnifiedTopology: true })
     .then(() => { console.log("Connected to database"); })
     .catch((err) => {
         console.error("Error in connecting to database:", err);

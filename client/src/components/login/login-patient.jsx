@@ -8,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  let userName = "";
 
   useEffect(() => {
     localStorage.removeItem('token');
@@ -18,8 +19,9 @@ const Login = () => {
     try {
       const response = await axios.post(`http://localhost:${PORT}/api/auth/login/patient`, { username, password });
       localStorage.setItem('token', response.data.token);
+      userName = response.data.username;
       setMessage('Login successful!');
-      navigate('/pt_db');
+      navigate(`/pt_db/${username}`);
     } catch (err) {
       setMessage('Login failed. Please check your username and password.');
     }
@@ -27,7 +29,7 @@ const Login = () => {
 
   return (
     <div className='h-[100vh] w-[100vw] bg-[url(src/assets/background-login.jpg)] bg-cover bg-top'>
-      <div className='absolute mt-[10%] ml-[60%] w-[350px] h-[290px] border-2 rounded-md border-gray-500'>
+      <div className='absolute mt-[10%] ml-[60%] w-[350px]  h-auto border-2 rounded-md border-gray-500'>
         <div className='flex justify-center align'>
         
       <img className='medpass-img w-16 h-16 object-conta' src='/src/assets/med-pass-cropped.png' alt='medpass' />
@@ -75,7 +77,7 @@ const Login = () => {
         <div className='text-md underline ml-2'> <Link to='/register/patient' className='text-red-700'> Register</Link> </div>
         </div>
         <div className='flex  mt-2 ml-4'  > 
-        <div className='text-md text-gray-500'>For Doctors: Login here </div>
+        <div className='text-md text-gray-500 mb-4'>For Doctors: Login here </div>
       
         <div className='text-md underline ml-2'> <Link to='/login/doctor' className='text-red-700'> Login</Link> </div>
         </div>

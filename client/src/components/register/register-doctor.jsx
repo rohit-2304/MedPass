@@ -56,9 +56,9 @@ const handleRegister = async (e) => {
       };
 
       const doctorResponse = await axios.request(options);
-    
+      console.log(doctorResponse.data);
 
-      // Adjust the filter to match the correct data structure and types
+     
       const Doctor = doctorResponse.data.filter(item => 
           item.smcName.toLowerCase() === council.toLowerCase() && 
           item.registrationNo === registration_no.toString() && 
@@ -69,7 +69,7 @@ const handleRegister = async (e) => {
 
       if (Doctor.length !== 0) {
           const response = await axios.post(`http://localhost:5001/api/authd/register/doctor`,{username,password,registration_no,year,council});
-   
+        
           setMessage('Registration successful!$');
           navigate('/login/doctor');
       } else {
@@ -84,7 +84,7 @@ const handleRegister = async (e) => {
 
     return (
         <div className='h-[100vh] w-[100vw] bg-[url(src/assets/background-login.jpg)] bg-cover bg-top'>
-        <div className='absolute mt-8  top-[10%] left-[60%] w-[375px] border-2 rounded-md border-gray-500 shadow-lg bg-white bg-opacity-90'>
+        <div className='absolute mt-8  top-[10%] left-[60%] w-[375px] h-auto border-2 rounded-md border-gray-500 shadow-lg bg-white bg-opacity-90'>
           <div className='flex justify-center mt-4'>
             <img className="medpass-img w-16 h-16 object-contain" src="/src/assets/med-pass-cropped.png" alt="medpass" />
           </div>

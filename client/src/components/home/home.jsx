@@ -4,17 +4,26 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
     const navigate = useNavigate();
     const [token, setToken] = useState(null);
+    const [tokend, setTokend] = useState(null);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
+        const storedTokend = localStorage.getItem('tokend');
         setToken(storedToken);
+        setTokend(storedTokend);
 
         if (storedToken) {
             navigate('/pt_db');
-        } else {
+        } else if(storedTokend){
+            navigate('/dt_db');
+        }
+        else {
             navigate('/');
         }
+       
     }, [navigate]);
+
+    
 
     const handleClick = () => {
         navigate('/login/patient');

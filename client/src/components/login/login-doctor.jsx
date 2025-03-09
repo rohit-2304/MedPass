@@ -10,14 +10,14 @@ const LoginD = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('tokend');
   }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`http://localhost:${PORT}/api/authd/login/doctor`, { username, password });
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('tokend', response.data.token);
       setMessage('Login successful!');
       navigate('/dt_db');
     } catch (err) {
@@ -28,7 +28,7 @@ const LoginD = () => {
   return (
     <div className='h-[100vh] w-[100vw] bg-[url(src/assets/background-login.jpg)] bg-cover bg-top'>
  
-      <div className='absolute mt-[10%] ml-[60%] w-[350px] h-[300px] border-2 rounded-md border-gray-500'>
+      <div className='absolute mt-[10%] ml-[60%] w-[350px] h-auto  border-2 rounded-md border-gray-500'>
         
         <div className='flex justify-center align'>
           <img className='medpass-img w-16 h-16 object-conta' src='/src/assets/med-pass-cropped.png' alt='medpass' />
@@ -69,14 +69,16 @@ const LoginD = () => {
         <div className='flex justify-center text-sm text-red-700'>
           {message && <p>{message}</p>}
         </div>
-        <div className='  mt-2 ml-4'  > 
-        <div className='text-md text-gray-500 p-0 mr-0'>Join us today-Create an Doctor account! </div>
-      
-        <div className=' absolute text-md underline ml-[35%] '> <Link to='/register/doctor' className='text-red-700'> Register</Link> </div>
-        </div>
+     <div className='flex  mt-2 ml-4'  > 
+             <div className='text-md text-gray-500 mb-4'>For Doctor Registration:</div>
+           
+             <div className='text-md underline ml-4'> <Link to='/register/doctor' className='text-red-700'> Register now</Link> </div>
+             </div>
       
        
       </div>
+     
+       
     </div>
   );
 };

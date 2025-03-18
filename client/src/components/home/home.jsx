@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function Home() {
     const navigate = useNavigate();
     const [token, setToken] = useState(null);
     const [tokend, setTokend] = useState(null);
 
+
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         const storedTokend = localStorage.getItem('tokend');
+        const username = localStorage.getItem("username");
         setToken(storedToken);
         setTokend(storedTokend);
 
         if (storedToken) {
-            navigate('/pt_db');
+            navigate(`/pt_db/${username}`);
         } else if(storedTokend){
-            navigate('/dt_db');
+            navigate(`/dt_db/${username}`);
         }
         else {
             navigate('/');

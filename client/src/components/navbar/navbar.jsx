@@ -9,6 +9,7 @@ function Navbar() {
   const {username} = useParams();
   const removeToken=()=>{
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
     localStorage.removeItem("tokend");
   }
   useEffect(() => {

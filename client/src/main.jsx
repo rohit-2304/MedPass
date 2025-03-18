@@ -14,6 +14,7 @@ import Pt_db from './components/patient-dashboard/pt_db.jsx';
 import Dt_db from './components/doctor-dashboard/dt_db.jsx';
 import Patient_info from './components/patient-info/patient_info.jsx';
 import Upload_doc from './components/upload-doc/upload-doc.jsx';
+import Viewdoc from './components/view-doc/view-doc.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -29,9 +30,10 @@ createRoot(document.getElementById('root')).render(
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/home" element={<Home />} />
         <Route path="/pt_db/:username" element={<Pt_db />} />
-        <Route path="/dt_db" element={<Dt_db />} />
+        <Route path="/dt_db/:username" element={<Dt_db />} />
         <Route path="/patient_info/:username" element={<Patient_info />} />
         <Route path="/upload_doc/:username" element={<Upload_doc />} />
+        <Route path="/view_doc/:username" element={<Viewdoc />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

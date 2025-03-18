@@ -18,8 +18,9 @@ const LoginD = () => {
     try {
       const response = await axios.post(`http://localhost:${PORT}/api/authd/login/doctor`, { username, password });
       localStorage.setItem('tokend', response.data.token);
+      localStorage.setItem('username',username );
       setMessage('Login successful!');
-      navigate('/dt_db');
+      navigate(`/dt_db/${username}`);
     } catch (err) {
       setMessage('Login failed. Please check your username and password.');
     }

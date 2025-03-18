@@ -6,7 +6,8 @@ const doctorSchema = new mongoose.Schema({
     registration_no: { type: String, required: true },
     council: { type: String, required: true },
     year: { type: String, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    doctorUrl:{type:String,required: true}
 });
 
 doctorSchema.pre("save", async function (next) {

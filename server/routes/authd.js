@@ -1,19 +1,34 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const Doctor = require('../Models/doctor'); // Ensure the correct path to the Doctor model
+const Doctor = require('../Models/doctor'); 
 const router = express.Router();
+const QRcode   = require("qrcode");
 
 router.post('/register/doctor', async (req, res) => {
     try {
         const { username, password, registration_no, year, council } = req.body;
-        const Doctor1 = new Doctor({username,registration_no,council,year,password});
-        await Doctor1.save(); 
-        res.status(201).send(`Doctor registered`);
+        const url = `http://localhost:5174/assign_permission/${username}`;
+        QRcode.toDataURL(url,async (err,doctorUrl)=>{
+            const Doctor1 = new Doctor({username,registration_no,council,year,password,doctorUrl});
+            await Doctor1.save(); 
+            res.status(201).send(`Doctor registered`);
+        })
+
     } catch (err) {
         console.error('Error registering Doctor:', err); // Log the error for debugging
         res.status(500).send('Error registering Doctor');
     }
 });
+router.get('/getQr/:username',async(req,res)=>{
+    try{
+            const {username} = req.params;
+            const info = await Doctor.findOne({username});
+
+        res.status(200).json(info);
+    }catch(err){
+            res.status(500).json("some error while genrating qr")
+    }
+})
 
 router.post('/login/doctor', async (req, res) => {
     try {

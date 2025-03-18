@@ -1,9 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function Dt_db() {
     const navigate = useNavigate();
+    const PORT =import.meta.env.VITE_PORT;
+    const {username} = useParams();
     const [tokend, setToken] = useState(null);
+    const [qrImage, setqrImage] = useState(null);
+    const [loaded,setLoaded] = useState("false");
+        useEffect(()=>{
+
+
+            const getQrImage=async()=>{
+                const response = await axios.get(`http://localhost:${PORT}/api/authd/getQr/${username}`);
+            
+              setqrImage(response.data.doctorUrl);
+            }
+
+            getQrImage();
+            setLoaded("true")
+        },[]);
+
 
     useEffect(() => {
             const handleStorageChange = () => {
@@ -25,7 +43,13 @@ function Dt_db() {
 
     return (
         <div>
-            doctor db
+            {
+                !loaded?<div>NOTLOADED</div>:<div>
+                    
+                    <img src={qrImage} alt="" />
+                    
+                    </div>
+            }
         </div>
     );
 }

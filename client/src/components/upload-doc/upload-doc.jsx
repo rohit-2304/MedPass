@@ -27,26 +27,22 @@ function Upload_doc() {
   const doctorName = e.target.DoctorName.value; // Replace with the name or id of the input
   const description = e.target.documentDescription.value; // Textarea field
   const illness = e.target.illness.value; // Input field
+  const fileType = e.target.fileType.value;
+  const issuedDate = e.target.issuedOn.value;
   try {
     // Wait for the file upload to complete
     await uploadBytes(myref, selectedFile);
-    const imageURL = await getDownloadURL(myref);
-    const date = new Date().getDate() // Day of the month (1-31)
-    const month = new Date().getMonth() + 1; // Month (0-11), so add 1 to get (1-12)
-  const year = new Date().getFullYear(); // Full year (e.g., 2025)
-
-    const dateString = `${date}/${month}/${year}`;
-    console.log(dateString);
-
+    const pdfURL = await getDownloadURL(myref);
   
 
-    await setDoc(doc(db,username, selectedFile.name), {
+    await setDoc(doc(db,username, selectedFile.name),{
       doctorName:doctorName,
       description:description,
       illness:illness,
       fileName:selectedFile.name,
-      fileURL: imageURL,
-      date:dateString
+      fileURL: pdfURL,
+      issuedOn:issuedDate,
+      fileType:fileType
     });
     alert("file uploaded succesfully");
     navigate(`/pt_db/${username}`);
@@ -70,8 +66,6 @@ function Upload_doc() {
       return;
     }
     setselectedFile(uploadFile);
-   
-
   };
 
   useEffect(() => {
@@ -115,8 +109,20 @@ function Upload_doc() {
 <label htmlFor="illness" className="" name="illness">Illness</label>
 <input type="text" id="illness" required placeholder="Enter Illness name"  className="mb-2 pl-1 border-[0.1px] text-sm hover:bg-blue-50"/>
 
-
-
+<div>
+      <label htmlFor="dropdown">Select report type:</label>
+      <select id="dropdown"  className="mt-2 mb-2 border-1" name="fileType">
+        <option value="">Select an option</option>
+        <option value="table_format">Lab Report</option>
+        <option value="descriptive">Prescription</option>
+        <option value="table_format">Vaccine record</option>
+        <option value="descriptive">Imaging</option>
+        <option value="descriptive">Others(description format)</option>
+      </select>
+ 
+    </div>
+      <label htmlFor="date_submission">ISSUED ON</label>
+      <input type="date" id="date_submission" name="issuedOn" className="mb-2 border-1" required/>
         <label
           htmlFor="file-upload"
           className="block mb-2 text-sm font-medium text-gray-900"
@@ -131,7 +137,7 @@ function Upload_doc() {
             Choose Document
           </label>
           <span id="file-name" className="text-gray-500 text-sm ">
-            No Document selected
+            No Document selected <span className="text-sm">(Enter proper document names)</span>
           </span>
         </div>
         <input

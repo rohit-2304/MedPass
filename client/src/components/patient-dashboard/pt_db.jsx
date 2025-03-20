@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ladenImage from "../../assets/laden.jpg";  // Correct image import
+import { UploadCloud, FileText, Scan, History } from "lucide-react";
 
 function Pt_db() {
     const navigate = useNavigate();
@@ -69,6 +70,7 @@ function Pt_db() {
                     </div>
                 </div>
             </div>
+           
             <div className='grid lg:grid-cols-4 gap-10  sm:grid-cols-2'>
                 <button
                         className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] cursor-pointer text-white font-bold py-2 px-6 rounded transition duration-300"
@@ -100,57 +102,62 @@ function Pt_db() {
 
             </div>
            {/* Cards Section */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+           
 
-{/* Card 1 - Upload */}
-<div className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300">
-    <h3 className="text-lg font-bold text-[#386641] mb-4">ADD DOCUMENTS</h3>
-    <p className="text-sm text-[#6A994E]">Upload your medical documents securely to keep them accessible anytime. Supported formats: PDF, JPG, PNG.</p>
-    <button
-        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+           <h2 className=''>Powerful features for your Health </h2>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
+
+    {/* Card 1 - Upload */}
+    <div 
+        className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
         onClick={handleUpload}
     >
-        Upload
-    </button>
-</div>
+        <UploadCloud className="text-[#386641] w-10 h-10 mb-4" />
+        <h3 className="text-lg font-bold text-[#386641] mb-4">ADD DOCUMENTS</h3>
+        <p className="text-sm text-[#6A994E]">
+            Upload your medical documents securely to keep them accessible anytime. Supported formats: PDF, JPG, PNG.
+        </p>
+    </div>
 
-{/* Card 2 - View */}
-<div className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300">
-    <h3 className="text-lg font-bold text-[#386641] mb-4">VIEW DOCUMENTS</h3>
-    <p className="text-sm text-[#6A994E]">Easily access and view all your previously uploaded medical files in one place.</p>
-    <button
-        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+    {/* Card 2 - View */}
+    <div 
+        className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
         onClick={handleView}
     >
-        View
-    </button>
-</div>
+        <FileText className="text-[#386641] w-10 h-10 mb-4" />
+        <h3 className="text-lg font-bold text-[#386641] mb-4">VIEW DOCUMENTS</h3>
+        <p className="text-sm text-[#6A994E]">
+            Easily access and view all your previously uploaded medical files in one place.
+        </p>
+    </div>
 
-{/* Card 3 - QR Scanner */}
-<div className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300">
-    <h3 className="text-lg font-bold text-[#386641] mb-4">QR SCANNER</h3>
-    <p className="text-sm text-[#6A994E]">Scan the doctor's QR code to share your medical history instantly and securely.</p>
-    <button
-        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+    {/* Card 3 - QR Scanner */}
+    <div 
+        className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
         onClick={handleScan}
     >
-        Scan
-    </button>
-</div>
+        <Scan className="text-[#386641] w-10 h-10 mb-4" />
+        <h3 className="text-lg font-bold text-[#386641] mb-4">QR SCANNER</h3>
+        <p className="text-sm text-[#6A994E]">
+            Scan the doctor's QR code to share your medical history instantly and securely.
+        </p>
+    </div>
 
-{/* Card 4 - History */}
-<div className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300">
-    <h3 className="text-lg font-bold text-[#386641] mb-4">UPLOAD HISTORY</h3>
-    <p className="text-sm text-[#6A994E]">Track and review all your previously uploaded documents along with timestamps.</p>
-    <button
-        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+    {/* Card 4 - History */}
+    <div 
+        className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
         onClick={handleView}
     >
-        History
-    </button>
-</div>
+        <History className="text-[#386641] w-10 h-10 mb-4" />
+        <h3 className="text-lg font-bold text-[#386641] mb-4">UPLOAD HISTORY</h3>
+        <p className="text-sm text-[#6A994E]">
+            Track and review all your previously uploaded documents along with timestamps.
+        </p>
+    </div>
 
 </div>
+
 
         </div>
     );

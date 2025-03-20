@@ -49,7 +49,7 @@ function Home() {
                         className="bg-[#6A994E] text-white px-6 py-2 rounded-lg shadow-md hover:bg-[#A7C957] hover:text-black transition duration-300 cursor-pointer"
                         onClick={handleClick}
                     >
-                        Login
+                        Get Started
                     </button>
                 </div>
             </div>

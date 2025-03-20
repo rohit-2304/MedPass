@@ -46,7 +46,7 @@ const handleRegister = async (e) => {
         method: 'POST',
         url: 'https://doctor-verification.p.rapidapi.com/',
         headers: {
-          'x-rapidapi-key': 'd9b9014465msha6e8729c4541274p173b9cjsn1c824a30ca3e',
+          'x-rapidapi-key': '489060673amshdab6cd553fa8234p1ea529jsn0b4b5089ba58',
           'x-rapidapi-host': 'doctor-verification.p.rapidapi.com',
           'Content-Type': 'application/json'
         },

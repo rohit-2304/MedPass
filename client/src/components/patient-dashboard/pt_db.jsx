@@ -72,7 +72,7 @@ function Pt_db() {
                 </div>
             </div>
            
-            <div className='grid lg:grid-cols-4 gap-10  sm:grid-cols-2'>
+            <div className='grid lg:grid-cols-4 gap-10  sm:grid-cols-2 p-10'>
                 <button
                         className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] cursor-pointer text-white font-bold py-2 px-6 rounded transition duration-300"
                         onClick={handleUpload}
@@ -105,59 +105,92 @@ function Pt_db() {
            {/* Cards Section */}
            
 
-           <h2 className=''>Powerful features for your Health </h2>
+           <h2 className='font-bold text-4xl  text-center p-5'>Powerful features for your Health </h2>
 
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
 
-    {/* Card 1 - Upload */}
-    <div 
-        className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
-        onClick={handleUpload}
-    >
-        <UploadCloud className="text-[#386641] w-10 h-10 mb-4" />
-        <h3 className="text-lg font-bold text-[#386641] mb-4">ADD DOCUMENTS</h3>
-        <p className="text-sm text-[#6A994E]">
-            Upload your medical documents securely to keep them accessible anytime. Supported formats: PDF, JPG, PNG.
-        </p>
+{/* Card 1 - Upload */}
+<div 
+    className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
+    onClick={handleUpload}
+>
+    <div className="flex items-center justify-center w-16 h-16 bg-[#A7C957] rounded-full mb-4">
+        <UploadCloud className="text-white w-10 h-10" />
     </div>
+    <h3 className="text-lg font-bold text-[#386641] mb-4">ADD DOCUMENTS</h3>
+    <p className="text-sm  mb-2">
+        Securely upload your medical documents to keep them accessible anytime, anywhere. 
+    </p>
+    <p className="text-sm  mb-2">
+        Supported formats: PDF, JPG, PNG. Organize and retrieve your records efficiently.
+    </p>
+    <p className="text-sm ">
+        Your files are encrypted and stored safely to ensure confidentiality.
+    </p>
+</div>
 
-    {/* Card 2 - View */}
-    <div 
-        className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
-        onClick={handleView}
-    >
-        <FileText className="text-[#386641] w-10 h-10 mb-4" />
-        <h3 className="text-lg font-bold text-[#386641] mb-4">VIEW DOCUMENTS</h3>
-        <p className="text-sm text-[#6A994E]">
-            Easily access and view all your previously uploaded medical files in one place.
-        </p>
+{/* Card 2 - View */}
+<div 
+    className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
+    onClick={handleView}
+>
+    <div className="flex items-center justify-center w-16 h-16 bg-[#A7C957] rounded-full mb-4">
+        <FileText className="text-white w-10 h-10" />
     </div>
+    <h3 className="text-lg font-bold text-[#386641] mb-4">VIEW DOCUMENTS</h3>
+    <p className="text-sm  mb-2">
+        Easily access and review all your previously uploaded medical files in one place. 
+    </p>
+    <p className="text-sm  mb-2">
+        Sort by date, category, or file type to quickly find the records you need.
+    </p>
+    <p className="text-sm ">
+        Preview files directly in the app without downloading.
+    </p>
+</div>
 
-    {/* Card 3 - QR Scanner */}
-    <div 
-        className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
-        onClick={handleScan}
-    >
-        <Scan className="text-[#386641] w-10 h-10 mb-4" />
-        <h3 className="text-lg font-bold text-[#386641] mb-4">QR SCANNER</h3>
-        <p className="text-sm text-[#6A994E]">
-            Scan the doctor's QR code to share your medical history instantly and securely.
-        </p>
+{/* Card 3 - QR Scanner */}
+<div 
+    className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
+    onClick={handleScan}
+>
+    <div className="flex items-center justify-center w-16 h-16 bg-[#A7C957] rounded-full mb-4">
+        <Scan className="text-white w-10 h-10" />
     </div>
+    <h3 className="text-lg font-bold text-[#386641] mb-4">QR SCANNER</h3>
+    <p className="text-sm  mb-2">
+        Instantly scan the doctor's QR code to share your medical history securely.
+    </p>
+    <p className="text-sm  mb-2">
+        Ensure doctors have real-time access to your upated medical records.
+    </p>
+    <p className="text-sm ">
+        Fast and efficient, saving time during consultations.
+    </p>
+</div>
 
-    {/* Card 4 - History */}
-    <div 
-        className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
-        onClick={handleView}
-    >
-        <History className="text-[#386641] w-10 h-10 mb-4" />
-        <h3 className="text-lg font-bold text-[#386641] mb-4">UPLOAD HISTORY</h3>
-        <p className="text-sm text-[#6A994E]">
-            Track and review all your previously uploaded documents along with timestamps.
-        </p>
+{/* Card 4 - History */}
+<div 
+    className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
+    onClick={handleView}
+>
+    <div className="flex items-center justify-center w-16 h-16 bg-[#A7C957] rounded-full mb-4">
+        <History className="text-white w-10 h-10" />
     </div>
+    <h3 className="text-lg font-bold text-[#386641] mb-4">UPLOAD HISTORY</h3>
+    <p className="text-sm  mb-2">
+        View and track all your previously uploaded documents along with timestamps.
+    </p>
+    <p className="text-sm  mb-2">
+        Keep a chronological record of your medical data for easy reference.
+    </p>
+    <p className="text-sm ">
+        Filter and search through your upload history effortlessly.
+    </p>
+</div>
 
 </div>
+
 
 
         </div>

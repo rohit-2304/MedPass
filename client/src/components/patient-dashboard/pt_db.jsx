@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ladenImage from "../../assets/laden.jpg";  // Correct image import
-import { UploadCloud, FileText, Scan, History } from "lucide-react";
+import { UploadCloud, FileText, Scan, BrainCircuit  } from "lucide-react";
 
 function Pt_db() {
     const navigate = useNavigate();
@@ -174,18 +174,18 @@ function Pt_db() {
     className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
     onClick={handleSummary}
 >
-    <div className="flex items-center justify-center w-16 h-16 bg-[#A7C957] rounded-full mb-4">
-        <History className="text-white w-10 h-10" />
+    <div className="flex items-center justify-center w-16 h-16 bg-[#a7c957] rounded-full mb-4">
+        <BrainCircuit className="text-white w-10 h-10" />
     </div>
-    <h3 className="text-lg font-bold text-[#386641] mb-4">UPLOAD HISTORY</h3>
+    <h3 className="text-lg font-bold text-[#386641] mb-4">VIEW AI SUMMARY</h3>
     <p className="text-sm  mb-2">
-        View and track all your previously uploaded documents along with timestamps.
+        View and track all your previously uploaded document's Summary.
     </p>
     <p className="text-sm  mb-2">
         Keep a chronological record of your medical data for easy reference.
     </p>
     <p className="text-sm ">
-        Filter and search through your upload history effortlessly.
+        Get Important information in just one click.
     </p>
 </div>
 

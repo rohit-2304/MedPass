@@ -16,71 +16,112 @@ const LoginD = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:${PORT}/api/authd/login/doctor`, { username, password });
+      const response = await axios.post('http://localhost:${PORT}/api/authd/login/doctor', { username, password });
       localStorage.setItem('tokend', response.data.token);
-      localStorage.setItem('username',username );
       setMessage('Login successful!');
-      navigate(`/dt_db/${username}`);
+      navigate('/dt_db');
     } catch (err) {
       setMessage('Login failed. Please check your username and password.');
     }
   };
 
   return (
-    <div className='h-[100vh] w-[100vw] bg-[url(src/assets/background-login.jpg)] bg-cover bg-top'>
- 
-      <div className='absolute mt-[10%] ml-[60%] w-[350px] h-auto  border-2 rounded-md border-gray-500'>
-        
-        <div className='flex justify-center align'>
-          <img className='medpass-img w-16 h-16 object-conta' src='/src/assets/med-pass-cropped.png' alt='medpass' />
-        </div>
-        <div className=' ml-4 mb-2 text-md font-medium'>Login as Doctor:</div>
-        <form onSubmit={handleLogin}>
-          <label htmlFor='Username' className='ml-4 text-red-900'>Username:</label>
-          <input
-            type='text'
-            value={username}
-            placeholder='Username'
-            required
-            onChange={(e) => setUsername(e.target.value)}
-            autoComplete='off'
-            id='Username'
-            className='ml-2 border text-gray-500 pl-2'
-          />
-          <label htmlFor='password' className='ml-4 text-red-900'>Password:</label>
-          <input
-            type='password'
-            value={password}
-            placeholder='Password'
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete='off'
-            id='password'
-            className='ml-3 border text-gray-500 pl-2 mt-4'
-          />
-          <div className='flex justify-center'>
-            <button
-              type='submit'
-              className='border text-md text-gray-600 font-bold w-[60px] h-[30px] rounded-md bg-green-100 hover:bg-green-200 mt-6'
-            >
-              Login
-            </button>
-          </div>
-        </form>
-        <div className='flex justify-center text-sm text-red-700'>
-          {message && <p>{message}</p>}
-        </div>
-     <div className='flex  mt-2 ml-4'  > 
-             <div className='text-md text-gray-500 mb-4'>For Doctor Registration:</div>
-           
-             <div className='text-md underline ml-4'> <Link to='/register/doctor' className='text-red-700'> Register now</Link> </div>
-             </div>
-      
-       
+    <div className="h-screen w-full bg-gradient-to-br from-[#ECEAE6] to-[#f5f4f1] flex justify-center items-center">
+  <div className="w-[400px] bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 relative overflow-hidden">
+    
+    {/* Back Button */}
+    <button
+      onClick={() => window.history.back()}
+      className="absolute top-6 left-6 text-[#386641] hover:text-[#2a4a30] transition-colors"
+      aria-label="Go back"
+    >
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+    </button>
+
+    {/* Decorative elements */}
+    <div className="absolute -top-32 -right-32 w-64 h-64 bg-[#386641]/10 rounded-full" />
+    <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-[#386641]/10 rounded-full" />
+    
+    <div className="flex flex-col items-center mb-8">
+      <div className="p-4 bg-white rounded-full shadow-lg mb-4">
+        <img 
+          className="w-20 h-20 object-contain animate-soft-bounce"
+          src='/src/assets/med-pass-cropped.png' 
+          alt='medpass' 
+        />
       </div>
-     
-       
+      <h1 className="text-2xl font-bold text-gray-800">Doctor Portal</h1>
+      <p className="text-gray-500 mt-1">Secure Medical Access</p>
     </div>
+
+    <form onSubmit={handleLogin} className="space-y-6">
+      <div className="relative">
+        <input
+          type="text"
+          value={username}
+          required
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full px-4 py-3 rounded-lg bg-white border-2 border-gray-200 focus:border-[#386641] focus:ring-2 focus:ring-[#386641]/20 outline-none transition-all peer"
+          placeholder="Username"
+        />
+       
+        <svg className="w-5 h-5 text-gray-400 absolute right-4 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </div>
+
+      <div className="relative">
+        <input
+          type="password"
+          value={password}
+          required
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-3 rounded-lg bg-white border-2 border-gray-200 focus:border-[#386641] focus:ring-2 focus:ring-[#386641]/20 outline-none transition-all peer"
+          placeholder="Password"
+        />
+       
+        <svg className="w-5 h-5 text-gray-400 absolute right-4 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+
+      <button
+        type="submit"
+        className="w-full py-3.5 bg-[#386641] hover:bg-[#2a4a30] active:bg-[#1f3a25]
+          text-white font-semibold rounded-lg shadow-md hover:shadow-lg 
+          transition-all duration-300 transform hover:-translate-y-0.5 
+          active:translate-y-0 active:scale-95 flex items-center justify-center"
+      >
+        Sign In
+        <span className="ml-2">→</span>
+      </button>
+
+      {message && (
+        <div className="flex items-center p-3 bg-red-50 border border-red-200 rounded-lg text-red-600">
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          {message}
+        </div>
+      )}
+
+      <div className="text-center mt-6">
+        <p className="text-gray-600">
+          New here?{' '}
+          <Link 
+            to="/register/doctor" 
+            className="text-[#386641] hover:text-[#2a4a30] font-semibold underline 
+              hover:no-underline transition-colors"
+          >
+            Create account
+          </Link>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
   );
 };
 

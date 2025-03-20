@@ -115,12 +115,12 @@ const PatientForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-green-50 to-blue-50 px-4">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-green-50 to-blue-50 px-4 ">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-xl rounded-lg w-full max-w-lg p-6 space-y-4 sm:space-y-6"
+        className="bg-white shadow-xl rounded-lg w-full max-w-lg p-6 space-y-4 sm:space-y-6  m-5 "
       >
-        <h2 className="text-3xl font-extrabold text-blue-600 text-center">Patient Information</h2>
+        <h2 className="text-3xl font-extrabold text-[#386641] text-center">Patient Information</h2>
 
         {/* Full Name */}
         <div>
@@ -294,7 +294,7 @@ const PatientForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+          className="w-full bg-[#386641] text-white font-semibold py-2 rounded-lg hover:[#6A994E] cursor-pointer focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           Submit
         </button>

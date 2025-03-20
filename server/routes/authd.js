@@ -7,7 +7,7 @@ const QRcode   = require("qrcode");
 router.post('/register/doctor', async (req, res) => {
     try {
         const { username, password, registration_no, year, council } = req.body;
-        const url = `http://localhost:5174/assign_permission/${username}`;
+        const url = `http://localhost:5173/assign_permission/${username}`;
         QRcode.toDataURL(url,async (err,doctorUrl)=>{
             const Doctor1 = new Doctor({username,registration_no,council,year,password,doctorUrl});
             await Doctor1.save(); 

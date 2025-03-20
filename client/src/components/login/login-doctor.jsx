@@ -16,10 +16,10 @@ const LoginD = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:${PORT}/api/authd/login/doctor', { username, password });
+      const response = await axios.post(`http://localhost:${PORT}/api/authd/login/doctor`, { username, password });
       localStorage.setItem('tokend', response.data.token);
-      setMessage('Login successful!');
-      navigate('/dt_db');
+      setMessage('Login successful!');  
+      navigate(`/dt_db/${username}`);
     } catch (err) {
       setMessage('Login failed. Please check your username and password.');
     }

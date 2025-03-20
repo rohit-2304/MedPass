@@ -65,7 +65,7 @@ function Viewdoc() {
             ) : pdfs.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {pdfs
-                        .filter((pdf) => pdf.id !== "#&-summary-&#")
+                        .filter((pdf) => pdf.id.trim() !== "#&_summary_&#" &&  pdf.id.trim() !== "histor_vector_embedding" && pdf.id.trim() !== "all_vector_embedding"  )
                         .map((pdf) => (
                             <div 
                                 key={pdf.id}

@@ -6,8 +6,8 @@ import { app } from "../../firebase.js";
 
 function Assignpermission() {
    const [token, setToken] = useState(null);
-   const [name, setName] = useState(null);
-    const  usernameD  = useParams().username;
+   const [name, setName] = useState("");
+    const  usernameD  = useParams().username; 
     const  patientUserName = localStorage.getItem("username")
       const navigate = useNavigate();
       const handleNameChange=(e)=>{
@@ -51,14 +51,10 @@ function Assignpermission() {
                 expiresAt: expirationTime,
                })
                
-
-
-
-
-              window.close();
+              navigate(`/pt_db/${patientUserName}`)
             }
                
-              
+
           
                 
               

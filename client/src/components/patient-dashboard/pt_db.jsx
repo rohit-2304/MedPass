@@ -12,6 +12,7 @@ function Pt_db() {
     const handleUpload = () => navigate(`/upload_doc/${username}`);
     const handleView = () => navigate(`/view_doc/${username}`);
     const handleScan = () => navigate(`/scan_qr/${username}`);
+    const handleSummary = () => navigate(`/view_summary/${username}`);
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -96,10 +97,9 @@ function Pt_db() {
 
                     <button
                         className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] cursor-pointer text-white font-bold py-2 px-6 rounded transition duration-300"
-                        onClick={handleView}
-                    >
-                        History
-                    </button>
+                        onClick={handleSummary}
+                    >   Summary
+                        </button>
 
             </div>
            {/* Cards Section */}
@@ -172,7 +172,7 @@ function Pt_db() {
 {/* Card 4 - History */}
 <div 
     className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300"
-    onClick={handleView}
+    onClick={handleSummary}
 >
     <div className="flex items-center justify-center w-16 h-16 bg-[#A7C957] rounded-full mb-4">
         <History className="text-white w-10 h-10" />

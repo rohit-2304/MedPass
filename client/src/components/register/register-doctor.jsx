@@ -56,7 +56,7 @@ const handleRegister = async (e) => {
       };
 
       const doctorResponse = await axios.request(options);
-      console.log(doctorResponse.data);
+      
 
      
       const Doctor = doctorResponse.data.filter(item => 

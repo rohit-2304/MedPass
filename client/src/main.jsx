@@ -19,6 +19,8 @@ import Viewdoc_D from './components/view-doc-doctor/view-doc-doctor.jsx';
 import Assignpermission from './components/assign-permission/assign-permission.jsx';
 import View_ParticularPatient from'./components/view-doc-particular-patient/view-doc-particular-patient.jsx'
 import PatientProfile from  './components/profile/patientProfile.jsx'
+import Viewsummary from  './components/view-summary/view-summary.jsx'
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -38,6 +40,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/upload_doc/:username" element={<Upload_doc />} />
         <Route path="/view_doc/:username" element={<Viewdoc />} />
         <Route path="/view_doc_D/:username" element={<Viewdoc_D />} />
+        <Route path="/view_summary/:username" element={<Viewsummary />} />
         <Route path="/scan_qr/:username" element={<Scan_qr />} />
         <Route path="/view_doc_patient/:patient" element={<View_ParticularPatient />}/>
         <Route path="/assign_permission/:username" element={<Assignpermission />} 

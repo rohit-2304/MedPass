@@ -1,60 +1,96 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 
-
 function Navbar() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [tokend, setTokend] = useState(localStorage.getItem('tokend'));
-  const location = useLocation(); // Get the current location
-  const {username} = useParams();
-  const removeToken=()=>{
+  const location = useLocation();
+  const { username } = useParams();
+
+  const removeToken = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("tokend");
-  }
+    setToken(null);
+    setTokend(null);
+  };
+
   useEffect(() => {
     const handleStorageChange = () => {
-      const newToken = localStorage.getItem('token');
-      const newTokend = localStorage.getItem('tokend');
-      
-      setToken(newToken);
-      setTokend(newTokend);
+      setToken(localStorage.getItem('token'));
+      setTokend(localStorage.getItem('tokend'));
     };
 
     window.addEventListener('storage', handleStorageChange);
-      handleStorageChange();
+    handleStorageChange();
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, [location]);
 
+  const isLoggedIn = token || tokend || username;
+
   return (
-    <nav className='medpass-nav h-16 bg-blue-100 grid grid-cols-[200px_1fr] sticky'>
-      <div className='medpass-nav-home grid grid-cols-[75px_1fr] gap-0.5 items-center text-blue-800'>
-        <Link to="/">
-          <img className="medpass-img w-40 h-16 object-conta" src="/src/assets/med-pass-cropped.png" alt="medpass" />
-        </Link>
-        {token||tokend||{username} ? (
-          <div className='text-sm font-medium underline ml-10 mt-5'><Link to="/aboutus">About Us</Link></div>
-        ) : null}
-          {token||tokend?  <div className='absolute ml-[95%] text-sm font-medium underline flex'>
-            <img  className="h-[20px] w-[20px]" src="src/assets/profile.png" alt=" " />
-         <a href="/" onClick={removeToken} className='no-underline'>logout</a>
-</div>:null}
-      </div>
-      {token||tokend||{username}? null : (
-        <div className='grid grid-cols-[auto_auto_2fr] gap-8 items-center'>
-          <div className='text-sm font-medium underline'><Link to="/">Home</Link></div>
-          <div className='text-sm font-medium underline'><Link to="/aboutus">About Us</Link></div>
-          <div className='grid grid-cols-[50px_50px] place-content-end mr-3'>
-            <div className='text-sm font-medium underline'><Link to="/login/patient">Login</Link> /</div>
-            <div className='text-sm font-medium underline'><Link to="/register/patient">Register</Link></div>
-          </div>
+    <nav className="bg-[white] text-black border-b sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center h-16 px-6">
+        {/* Logo and About Us */}
+        <div className="flex items-center space-x-6">
+          <Link to="/">
+            <img 
+              className="w-25  h-16 object-contain" 
+              src="/src/assets/med-pass-cropped.png" 
+              alt="medpass" 
+            />
+          </Link>
+
+          {isLoggedIn && (
+            <Link 
+              to="/aboutus" 
+              className="text-lg font-medium  hover:text-[#386641] transition"
+            >
+              About Us
+            </Link>
+          )}
         </div>
-      )}
-    
-    
+
+        {/* Navigation Links */}
+        <div className="flex items-center space-x-6">
+          {!isLoggedIn ? (
+            <>
+              <Link to="/" className="text-sm font-medium hover:text-[#386641] transition">
+                Home
+              </Link>
+              <Link to="/aboutus" className="text-sm font-medium hover:text-[#386641] transition">
+                About Us
+              </Link>
+              <div className="flex space-x-3">
+                <Link to="/login/patient" className="text-sm font-medium hover:text-[#386641] transition">
+                  Login
+                </Link>
+                <span>/</span>
+                <Link to="/register/patient" className="text-sm font-medium hover:text-[#386641] transition">
+                  Register
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center space-x-4">
+              <img 
+                className="h-8 w-8 rounded-full" 
+                src="src/assets/profile.png" 
+                alt="profile" 
+              />
+              <button 
+                onClick={removeToken} 
+                className="bg-[#BC4749] hover:bg-[#386641] text-white px-4 py-2 rounded-lg transition cursor-pointer"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </nav>
   );
 }

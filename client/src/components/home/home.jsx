@@ -1,47 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Hero from './hero'; // Importing the Hero component
 
 function Home() {
     const navigate = useNavigate();
     const [token, setToken] = useState(null);
     const [tokend, setTokend] = useState(null);
 
-
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         const storedTokend = localStorage.getItem('tokend');
         const username = localStorage.getItem("username");
+
         setToken(storedToken);
         setTokend(storedTokend);
 
         if (storedToken) {
             navigate(`/pt_db/${username}`);
-        } else if(storedTokend){
+        } else if (storedTokend) {
             navigate(`/dt_db/${username}`);
         }
-        else {
-            navigate('/');
-        }
-       
     }, [navigate]);
-
-    
 
     const handleClick = () => {
         navigate('/login/patient');
     };
 
     return (
-        <div className="body-home h-[100vh] w-[100vw] grid grid-cols-[1fr_2fr] bg-[url(src/assets/background-home.jpg)] bg-cover bg-center bg-linear-to-r from-cyan-100 to-blue-200">
-            <div className="flex items-center"></div>
-            <div className="right-part-home mt-[25%] ml-[10%]">
-                <div className='rounded-md grid grid-rows-2'>
-                    <div className='text-2xl font-bold text-center text-gray-800 p-1 mb-0'>Join us to be part of smarter healthcare future
-                        <div className='text-xs text-gray-400 text-center pt-2 pr-2 pl-2'>Get verified access to trusted doctors and manage your health history effortlessly</div>
-                    </div>
-                    <div className='flex justify-center place-items-center'>
-                        <button className='border text-md text-gray-600 font-bold w-[60px] h-[30px] rounded-md bg-green-100 hover:bg-green-200' onClick={handleClick}>Login</button>
-                    </div>
+        <div className="min-h-screen w-full bg-gradient-to-b from-white to-[#ebe5db]">
+            
+            <div className="h-full w-full grid grid-cols-1 lg:grid-cols-2  ">
+                
+                {/* Left Side: Hero Animation */}
+                <div className="flex justify-center items-center">
+                    <Hero />
+                </div>
+
+                {/* Right Side: Text & Button */}
+                <div className="flex flex-col justify-center items-start px-12">
+                    <h1 className="text-5xl font-bold text-[#000] mb-4">
+                        <span className='text-[#6A994E]'>Join us for a Smarter</span><br/>Healthcare Future
+                    </h1>
+                    <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                        Get verified access to trusted doctors and manage your health history effortlessly.
+                        Your data, your control – experience seamless healthcare with us.
+                    </p>
+                    <button 
+                        className="bg-[#6A994E] text-white px-6 py-2 rounded-lg shadow-md hover:bg-[#A7C957] hover:text-black transition duration-300 cursor-pointer"
+                        onClick={handleClick}
+                    >
+                        Login
+                    </button>
                 </div>
             </div>
         </div>

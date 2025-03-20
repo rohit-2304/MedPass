@@ -16,7 +16,7 @@ import Patient_info from './components/patient-info/patient_info.jsx';
 import Upload_doc from './components/upload-doc/upload-doc.jsx';
 import Scan_qr from './components/scan-qr/scan-qr.jsx';
 import Viewdoc from './components/view-doc/view-doc.jsx';
-
+import PatientProfile from './components/profile/patientProfile.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -36,6 +36,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/upload_doc/:username" element={<Upload_doc />} />
         <Route path="/view_doc/:username" element={<Viewdoc />} />
         <Route path="/scan_qr/:username" element={<Scan_qr />} />
+        <Route path="/profile/:username" element={<PatientProfile />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

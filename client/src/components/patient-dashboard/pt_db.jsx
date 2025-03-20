@@ -1,87 +1,158 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import ladenImage from "../../assets/laden.jpg";  // Correct image import
 
 function Pt_db() {
     const navigate = useNavigate();
     const location = useLocation();
     const [token, setToken] = useState(null);
-    const {username} = useParams();
-    const handleUpload=()=>{
-            navigate(`/upload_doc/${username}`)
-    }
-    const handleView=()=>{
-            navigate(`/view_doc/${username}`)
-    }
-    const handleScan=()=>{
-            navigate(`/scan_qr/${username}`)}
+    const { username } = useParams();
+
+    const handleUpload = () => navigate(`/upload_doc/${username}`);
+    const handleView = () => navigate(`/view_doc/${username}`);
+    const handleScan = () => navigate(`/scan_qr/${username}`);
 
     useEffect(() => {
-            const handleStorageChange = () => {
-                const newToken = localStorage.getItem('token');
-                setToken(newToken);
-                if(!newToken){
-                    localStorage.removeItem('tokend')
-                    navigate('/home')
-                }
-            };
-    
-            window.addEventListener('storage', handleStorageChange);
-            handleStorageChange();
-           
-    
-            return () => {
-                window.removeEventListener('storage', handleStorageChange);
-            };
-        }, []);
+        const handleStorageChange = () => {
+            const newToken = localStorage.getItem('token');
+            setToken(newToken);
+            if (!newToken) {
+                localStorage.removeItem('tokend');
+                navigate('/home');
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        handleStorageChange();
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
 
     return (
-        
+        <div className="min-h-screen bg-gradient-to-b from-white to-[#ECEAE6] p-8 ">
             
-        <div className="min-h-screen bg-gradient-to-br from-blue-200 via-green-100 to-blue-50">
-        <div className="grid grid-cols-4 gap-4 p-4">
-          <div className="break-all grid grid-rows-[auto_400px] justify-items-center bg-white shadow-md rounded-lg transition-transform duration-300 hover:scale-110 hover:shadow-lg border border-blue-300 hover:border-blue-500">
-            <div className="border-b-2 border-gray-300 min-w-full text-center font-bold">ADD DOCUMENTS</div>
-            <div className="border-b border-gray-300 min-w-full">
-                <div className='h-[80%]'>Info</div>
-                <div className='flex justify-center align-bottom '><button className='border text-md text-gray-600 font-bold w-[60px] h-[30px] rounded-md bg-green-100 hover:bg-green-200 mt-6'onClick={handleUpload}> Upload</button></div>
-            </div>
+            {/* Header Section */}
+            <div className="bg-[#ECEAE6] p-8 rounded-lg shadow-md flex flex-col lg:flex-row items-center justify-between gap-10">
+                
+                {/* Left - Image */}
+                <div className="w-full lg:w-1/3 mb-6 lg:mb-0">
+                    <img 
+                        src={ladenImage} 
+                        alt="Medical Illustration" 
+                        className="w-full h-64 object-cover rounded-lg shadow-md"
+                    />
+                </div>
 
+                {/* Middle - Info */}
+                <div className="w-full lg:w-2/3 text-left lg:text-left px-6 ">
+                <ul className='text-xl'>
+                    <li><span className="text-[#386641] font-bold">Name :</span> Abdul Sheikh </li>
+                    <li><span  className="text-[#386641] font-bold">Age :</span> 31 </li>
+                    <li><span  className="text-[#386641] font-bold">Sex :</span> Male </li>
+                </ul>
+                  
+                </div>
+               
+                {/* Right - QR Scanner */}
+                <div className="w-full lg:w-1/3 flex justify-center">
+                    <div className="bg-white shadow-lg rounded-lg border border-[#6A994E] p-6 text-center hover:scale-105 transition-transform duration-300">
+                        <h3 className="text-lg font-bold text-[#386641] mb-4 ">QR SCANNER</h3>
+                        <p className="text-[#6A994E]">Scan QR to grant the doctor access to your medical data.</p>
+                        <button
+                            className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+                            onClick={handleScan}
+                        >
+                            Scan QR
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div className='grid lg:grid-cols-4 gap-10  sm:grid-cols-2'>
+                <button
+                        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] cursor-pointer text-white font-bold py-2 px-6 rounded transition duration-300"
+                        onClick={handleUpload}
+                    >
+                        Upload
+                </button>
 
-          </div>
-          <div className="break-all grid grid-rows-[auto_400px] justify-items-center bg-white shadow-md rounded-lg transition-transform duration-300 hover:scale-110 hover:shadow-lg border border-blue-300 hover:border-blue-500">
-            <div className="border-b-2 border-gray-300 min-w-full text-center font-bold">VIEW DOCUMENTS</div>
-            <div className="border-b border-gray-300 min-w-full">
-                <div className='h-[80%]'>Info</div>
-                <div className='flex justify-center align-bottom '><button className='border text-md text-gray-600 font-bold w-[60px] h-[30px] rounded-md bg-green-100 hover:bg-green-200 mt-6'onClick={handleView}> View</button></div>
-            </div>
-          </div>
-          <div className="break-all grid grid-rows-[auto_400px] justify-items-center bg-white shadow-md rounded-lg transition-transform duration-300 hover:scale-110 hover:shadow-lg border border-blue-300 hover:border-blue-500">
-            <div className="border-b-2 border-gray-300 min-w-full text-center font-bold">QR Scanner</div>
-            <div className="border-b border-gray-300 min-w-full">
-                <div className='h-[80%]'>sdasda</div>
-                <div className='flex justify-center align-bottom '><button className='border text-md text-gray-600 font-bold w-[60px] h-[30px] rounded-md bg-green-100 hover:bg-green-200 mt-6'onClick={handleScan}> Scan</button></div>
-            </div>
-          </div>
-          <div className="break-all grid grid-rows-[auto_400px] justify-items-center bg-white shadow-md rounded-lg transition-transform duration-300 hover:scale-110 hover:shadow-lg border border-blue-300 hover:border-blue-500">
-            <div className="border-b-2 border-gray-300 min-w-full text-center font-bold">VIEW DOCUMENTS</div>
-            <div className="border-b border-gray-300 min-w-full">
-                <div className='h-[80%]'>Info</div>
-                <div className='flex justify-center align-bottom '><button className='border text-md text-gray-600 font-bold w-[60px] h-[30px] rounded-md bg-green-100 hover:bg-green-200 mt-6'onClick={handleView}> View</button></div>
-            </div>
-          </div>
-         
-          
+                <button
+                        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] cursor-pointer text-white font-bold py-2 px-6 rounded transition duration-300"
+                        onClick={handleView}
+                    >
+                        View
+                    </button>
 
-       
-      
-        
+                    <button
+                        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] cursor-pointer text-white font-bold py-2 px-6 rounded transition duration-300"
+                        onClick={handleScan}
+                    >
+                        Scan
+                    </button>
+
+                    <button
+                        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] cursor-pointer text-white font-bold py-2 px-6 rounded transition duration-300"
+                        onClick={handleView}
+                    >
+                        History
+                    </button>
+
+            </div>
+           {/* Cards Section */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+
+{/* Card 1 - Upload */}
+<div className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300">
+    <h3 className="text-lg font-bold text-[#386641] mb-4">ADD DOCUMENTS</h3>
+    <p className="text-sm text-[#6A994E]">Upload your medical documents securely to keep them accessible anytime. Supported formats: PDF, JPG, PNG.</p>
+    <button
+        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+        onClick={handleUpload}
+    >
+        Upload
+    </button>
+</div>
+
+{/* Card 2 - View */}
+<div className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300">
+    <h3 className="text-lg font-bold text-[#386641] mb-4">VIEW DOCUMENTS</h3>
+    <p className="text-sm text-[#6A994E]">Easily access and view all your previously uploaded medical files in one place.</p>
+    <button
+        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+        onClick={handleView}
+    >
+        View
+    </button>
+</div>
+
+{/* Card 3 - QR Scanner */}
+<div className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300">
+    <h3 className="text-lg font-bold text-[#386641] mb-4">QR SCANNER</h3>
+    <p className="text-sm text-[#6A994E]">Scan the doctor's QR code to share your medical history instantly and securely.</p>
+    <button
+        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+        onClick={handleScan}
+    >
+        Scan
+    </button>
+</div>
+
+{/* Card 4 - History */}
+<div className="bg-white shadow-lg rounded-lg p-8 border border-[#6A994E] hover:scale-105 transition-transform duration-300">
+    <h3 className="text-lg font-bold text-[#386641] mb-4">UPLOAD HISTORY</h3>
+    <p className="text-sm text-[#6A994E]">Track and review all your previously uploaded documents along with timestamps.</p>
+    <button
+        className="mt-4 bg-[#A7C957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300"
+        onClick={handleView}
+    >
+        History
+    </button>
+</div>
+
+</div>
+
         </div>
-     
-      </div>
-      
-     
-
-
     );
 }
 

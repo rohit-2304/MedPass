@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [tokend, setTokend] = useState(localStorage.getItem('tokend'));
   const location = useLocation();
   const { username } = useParams();
+  const navigate = useNavigate(); // Add useNavigate hook
 
   const removeToken = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("tokend");
-    setToken(null);
-    setTokend(null);
+    navigate('/'); // Redirect to homepage or login after logout
   };
 
   useEffect(() => {
     const handleStorageChange = () => {
-      setToken(localStorage.getItem('token'));
-      setTokend(localStorage.getItem('tokend'));
+      const newToken = localStorage.getItem('token');
+      const newTokend = localStorage.getItem('tokend');
+      
+      setToken(newToken);
+      setTokend(newTokend);
+
+      
     };
 
     window.addEventListener('storage', handleStorageChange);
@@ -38,7 +43,7 @@ function Navbar() {
         <div className="flex items-center space-x-6">
           <Link to="/">
             <img 
-              className="w-25  h-16 object-contain" 
+              className="w-25 h-16 object-contain" 
               src="/src/assets/med-pass-cropped.png" 
               alt="medpass" 
             />
@@ -47,7 +52,7 @@ function Navbar() {
           {isLoggedIn && (
             <Link 
               to="/aboutus" 
-              className="text-lg font-medium  hover:text-[#386641] transition"
+              className="text-lg font-medium hover:text-[#386641] transition"
             >
               About Us
             </Link>

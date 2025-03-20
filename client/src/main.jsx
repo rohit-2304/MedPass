@@ -18,7 +18,6 @@ import Viewdoc from './components/view-doc-patient/view-doc-patient.jsx';
 import Viewdoc_D from './components/view-doc-doctor/view-doc-doctor.jsx';
 import Assignpermission from './components/assign-permission/assign-permission.jsx';
 import View_ParticularPatient from'./components/view-doc-particular-patient/view-doc-particular-patient.jsx'
-
 import PatientProfile from  './components/profile/patientProfile.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>

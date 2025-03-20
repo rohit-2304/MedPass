@@ -18,7 +18,8 @@ function Pt_db() {
             const newToken = localStorage.getItem('token');
             setToken(newToken);
             if (!newToken) {
-                localStorage.removeItem('tokend');
+                localStorage.removeItem("tokend");
+                
                 navigate('/home');
             }
         };

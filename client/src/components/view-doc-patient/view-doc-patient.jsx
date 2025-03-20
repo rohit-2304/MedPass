@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getDocs, getFirestore, collection } from "firebase/firestore";
 import { app } from "../../firebase";
 
+
 function Viewdoc() {
     const [pdfs, setPdfs] = useState([]);
     const [loaded, setLoaded] = useState(false); 
@@ -51,7 +52,9 @@ function Viewdoc() {
         };
       }, [navigate]);
     return (
+        
         <div className="bg-gray-100 min-h-screen p-6">
+
         <h1 className="text-2xl font-bold text-center text-blue-600 mb-6">
             Documents for {username}
         </h1>

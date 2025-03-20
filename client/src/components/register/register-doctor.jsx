@@ -68,7 +68,7 @@ const handleRegister = async (e) => {
       console.log('Filtered Doctor:', Doctor);
 
       if (Doctor.length !== 0) {
-          const response = await axios.post(`http://localhost:5001/api/authd/register/doctor`,{username,password,registration_no,year,council});
+          const response = await axios.post(`http://localhost:${PORT}/api/authd/register/doctor`,{username,password,registration_no,year,council});
         
           setMessage('Registration successful!$');
           navigate('/login/doctor');

@@ -44,36 +44,50 @@ function Dt_db() {
         }, []);
 
     return (
-        <div>
-        {
-          !loaded ? (
-            <div className="text-center text-xl font-semibold text-gray-500 p-6">Loading...</div>
-          ) : (
-            <div className="grid md:grid-cols-2 gap-4 p-6 bg-gray-100">
-              {/* View Documents Card */}
-              <div>
-                <div className="flex flex-col items-center bg-white shadow-lg rounded-lg border border-blue-400 hover:border-blue-600 hover:shadow-xl transition-transform transform hover:-translate-y-1">
-                  <div className="border-b-2 border-gray-300 w-full text-center text-lg font-bold py-3">VIEW DOCUMENTS</div>
-                  <div className="p-4 flex flex-col justify-between h-80">
-                    <div className="flex-grow overflow-auto text-gray-600 text-center">Info</div>
-                    <div className="mt-6">
-                      <button onClick={handleView} className="py-2 px-4 border text-sm text-gray-700 font-semibold rounded bg-green-200 hover:bg-green-300 transition duration-200">
-                        View
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* QR Image Section */}
-              <div className="flex flex-col items-center bg-white shadow-lg rounded-lg border border-blue-400 hover:border-blue-600 hover:shadow-xl transition-transform transform hover:-translate-y-1">
-                <div className="py-3 text-lg font-bold text-gray-700">DR QR</div>
-                <img src={qrImage} alt="QR Code" className="object-contain max-h-80 rounded-md shadow-md"/>
+      <div className="min-h-screen bg-[#ECEAE6] flex justify-center items-center p-8">
+      {!loaded ? (
+        <div className="text-2xl font-medium text-[#6A994E] animate-pulse">Loading...</div>
+      ) : (
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl w-full">
+    
+          {/* View Documents Card */}
+          <div className="bg-white rounded-xl shadow-md border border-[#386641] hover:shadow-lg transition-all duration-300 ">
+            <div className="border-b-4 border-[#386641] p-4">
+              <h2 className="text-xl font-semibold text-[#386641]">DOCUMENTS</h2>
+            </div>
+            <div className="p-6 flex flex-col justify-between h-80">
+              <p className="text-[#6A994E] text-md leading-relaxed">
+                Access and manage your uploaded documents easily.
+              </p>
+              <div className="mt-6">
+                <button 
+                  onClick={handleView}
+                  className="w-full py-3 text-white bg-[#6A994E] rounded-lg text-md font-medium hover:bg-[#386641] transition-all duration-300 cursor-pointer">
+                  View
+                </button>
               </div>
             </div>
-          )
-        }
-      </div>
+          </div>
+    
+          {/* QR Image Section */}
+          <div className="bg-white rounded-xl shadow-md border border-[#386641] hover:shadow-lg transition-all duration-300 flex flex-col justify-center items-center ">
+            <div className="border-b-4 border-[#386641] w-full p-4">
+              <h2 className="text-xl font-semibold text-[#386641]"> QR</h2>
+            </div>
+            <div className="flex justify-center items-center w-full h-full">
+              <img 
+                src={qrImage} 
+                alt="QR Code" 
+                className="max-h-60 rounded-lg shadow-sm border border-[#6A994E] transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          </div>
+    
+        </div>
+      )}
+    </div>
+    
+    
       
     );
 }

@@ -43,11 +43,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/view_summary/:username" element={<Viewsummary />} />
         <Route path="/scan_qr/:username" element={<Scan_qr />} />
         <Route path="/view_doc_patient/:patient" element={<View_ParticularPatient />}/>
-        <Route path="/assign_permission/:username" element={<Assignpermission />} 
-       
-        
-        
-        />
+        <Route path="/assign_permission/:username" element={<Assignpermission />}  />
         <Route path="/profile/:username" element={<PatientProfile />} />
       </Routes>
     </BrowserRouter>

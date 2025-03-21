@@ -16,35 +16,46 @@ function Viewsummary() {
     
 
 
-      useEffect(()=>{
-        const getti_summ = async()=>{
-             const db = getFirestore(app);
-             const q = collection(db, username); 
-            const response = await getDocs(q);
-            setPdfs(
-                response.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(), 
+    
+      const getti_summ = async () => {
+        try {
+            const db = getFirestore(app); // Initialize Firestore
+            const q = collection(db, username); // Fetch the collection using the username
+            const response = await getDocs(q); // Get all documents in the collection
+    
+            // Filter documents that have a 'summary' field
+            const filteredPdfs = response.docs
+                .map((doc) => ({
+                    id: doc.id, // The document ID
+                    ...doc.data(), // All other document fields
                 }))
-            );
+                .filter((doc) => doc.summary); // Keep only documents with the 'summary' field
+    
+            setPdfs(filteredPdfs); // Save filtered documents to state
+            setLoaded(true); // Mark loading as complete
+        } catch (error) {
+            console.error("Error fetching documents:", error);
         }
-            getti_summ();
+    };
+           
 
-      },[])
 
     useEffect(()=>{
     try{ 
         
         const get_info=async()=>{
         const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
-        console.log(response.data)
+        
+      
     
             const response2 = await axios.post("http://127.0.0.1:8001/", {
                "username": username,
                "info": response.data ? response.data : { username: username },
        
      // Send the data as i  t is (object format)
-            }, {
+            }
+           
+            , {
                 headers: {
                     "Content-Type": "application/json", // Ensure headers match
                 },
@@ -52,8 +63,9 @@ function Viewsummary() {
            
     
     }; 
-
-            get_info();
+    get_info();
+    getti_summ();
+           
 
 }   catch(e){
     console.error("some error while fetching")
@@ -96,7 +108,7 @@ useEffect(() => {
                                 key={pdf.id} // Added key to avoid React warnings
                                 onClick={() => navigate(`/view_doc_patient/${pdf.id}`)} 
                                 className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-200"
-                            >
+                            > 
                                 {pdf.summary || "Unnamed Document"}
                             </div>
                         ))}

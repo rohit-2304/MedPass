@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ladenImage from "../../assets/laden.jpg";  // Correct image import
 import { UploadCloud, FileText, Scan, BrainCircuit  } from "lucide-react";
+import axios from "axios" 
 
 function Pt_db() {
     const navigate = useNavigate();
     const location = useLocation();
     const [token, setToken] = useState(null);
     const { username } = useParams();
+    const [info,setInfo]=useState(null);
+    const PORT = import.meta.env.VITE_PORT; // Port from environment variables
+
 
     const handleUpload = () => navigate(`/upload_doc/${username}`);
     const handleView = () => navigate(`/view_doc/${username}`);
@@ -33,6 +37,20 @@ function Pt_db() {
         };
     }, []);
 
+    useEffect(()=>{
+        const get_info = async () => {
+            try {
+              const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
+              setInfo(response.data); // Save the response data to state
+            } catch (err) {
+              console.error("Error fetching patient info:", err);
+              setError(true); // Set error state
+            }
+          };
+      
+          get_info();
+
+    },[username])
     return (
         <div className="min-h-screen bg-gradient-to-b from-white to-[#ECEAE6] p-8 ">
             
@@ -51,9 +69,9 @@ function Pt_db() {
                 {/* Middle - Info */}
                 <div className="w-full lg:w-2/3 text-left lg:text-left px-6 ">
                 <ul className='text-xl'>
-                    <li><span className="text-[#386641] font-bold">Name :</span> Abdul Sheikh </li>
-                    <li><span  className="text-[#386641] font-bold">Age :</span> 31 </li>
-                    <li><span  className="text-[#386641] font-bold">Sex :</span> Male </li>
+                    <li><span className="text-[#386641] font-bold">Name :</span>{info?.patient_name || "Loading..."} </li>
+                    <li><span  className="text-[#386641] font-bold">Date_of_birth :</span> {info?.date_of_birth || "Unknown"} </li>
+                    <li><span  className="text-[#386641] font-bold">Sex :</span> {info?.gender || "Unknown"} </li>
                 </ul>
                   
                 </div>

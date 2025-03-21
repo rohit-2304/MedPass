@@ -14,7 +14,24 @@ function Viewsummary() {
       const [loaded, setLoaded] = useState(false);
       const [pdfs,setPdfs] = useState(null);
     
+      const formatSummary = (text) => {
+        if (!text) return "<p>No summary available</p>";
 
+        // Bold headings
+        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+        // Bullet points
+        text = text.replace(/\* (.*?)\n/g, '<li>$1</li>');
+
+        // Wrap bullets in <ul> tags
+        text = text.replace(/<li>.*?<\/li>/gs, (match) => `<ul>${match}</ul>`);
+
+        // Paragraphs for plain text sections
+        text = text.replace(/(?:\r\n|\r|\n){2,}/g, '</p><p>');
+        text = `<p>${text}</p>`;
+
+        return text;
+    };
 
     
       const getti_summ = async () => {
@@ -94,27 +111,31 @@ useEffect(() => {
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
-    <h1 className="text-2xl font-bold text-center text-blue-600 mb-6">
-       Summary for Patient
+    <h1 className="text-3xl font-bold text-center text-[#386641] mt-5 mb-3">
+        Summary for Patient
     </h1>
 
-    {!loaded ? 
+    { !loaded ? (
         <p className="text-center text-gray-600">Loading...</p>
-     :<div> 
-                                {pdfs
-                        .filter((pdf)=>pdf.id.trim()=="#&_summary_&#") // Fixed filter logic
-                        .map((pdf) => (
-                            <div
-                                key={pdf.id} // Added key to avoid React warnings
-                                onClick={() => navigate(`/view_doc_patient/${pdf.id}`)} 
-                                className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-200"
-                            > 
-                                {pdf.summary || "Unnamed Document"}
-                            </div>
-                        ))}
-
-     </div>
-    }
+    ) : (
+        <div className="space-y-4">
+            {pdfs
+                .filter((pdf) => pdf.id.trim() === "#&_summary_&#") 
+                .map((pdf) => (
+                    <div
+                        key={pdf.id}
+                        onClick={() => navigate(`/view_doc_patient/${pdf.id}`)}
+                        className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-200 lg:p-10 lg:mx-25 lg:my-10"
+                    >
+                       <div
+                            dangerouslySetInnerHTML={{ __html: formatSummary(pdf.summary) }}
+                            className="text-gray-700 leading-relaxed"
+                                />
+                        </div>
+                    
+                ))}
+        </div>
+    )}
 </div>
   )
 }

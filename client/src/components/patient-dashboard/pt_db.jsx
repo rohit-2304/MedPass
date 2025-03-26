@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import ladenImage from "../../assets/laden.png";  // Correct image import
+import userImage from "../../assets/user.jpg";  // Correct image import
 import { UploadCloud, FileText, Scan, BrainCircuit  } from "lucide-react";
 import axios from "axios" 
 
@@ -60,7 +60,7 @@ function Pt_db() {
                 {/* Left - Image */}
                 <div className="w-full lg:w-1/3 mb-6 lg:mb-0">
                     <img 
-                        src={ladenImage} 
+                        src={userImage} 
                         alt="Medical Illustration" 
                         className="w-full h-64 object-cover rounded-lg shadow-md"
                     />

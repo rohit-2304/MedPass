@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import ladenImage from "../../assets/laden.png"; // Ensure the image path is correct
+import userImage from "../../assets/user.jpg"; // Ensure the image path is correct
 
 const PatientProfile = () => {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const PatientProfile = () => {
       <div className="bg-[#FFFFFF] shadow-2xl rounded-2xl p-10 max-w-3xl w-full">
         <div className="flex flex-col items-center">
           <img
-            src={ladenImage}
+            src={userImage}
             alt={`Profile picture of ${info?.patient_name || "patient"}`}
             className="w-40 h-40 rounded-full border-4 object-cover border-[#386641]"
           />

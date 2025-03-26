@@ -99,7 +99,7 @@ function Navbar() {
               </button>
               <button 
                 onClick={removeToken} 
-                className="bg-[#BC4749] hover:bg-[#386641] text-white px-4 py-2 rounded-lg transition"
+                className="bg-[#BC4749] hover:bg-[#386641] text-white px-4 py-2 rounded-lg transition cursor-pointer"
               >
                 Logout
               </button>

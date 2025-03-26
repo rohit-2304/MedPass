@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import ladenImage from "../../assets/laden.jpg";  // Correct image import
+import ladenImage from "../../assets/laden.png";  // Correct image import
 import { UploadCloud, FileText, Scan, BrainCircuit  } from "lucide-react";
 import axios from "axios" 
 

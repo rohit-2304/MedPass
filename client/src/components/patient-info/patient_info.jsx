@@ -107,6 +107,11 @@ const PatientForm = () => {
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
+      const response2 = await axios.post(
+        `http://localhost:${PORT}/api/auth/register/patient`,
+        {username,password},
+        { headers: { "Content-Type": "application/json" } }
+      );
      navigate('/login/patient');
 
     } else {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate,useLocation, useParams } from 'react-router-dom';
 
 const PatientForm = () => {
     const navigate =useNavigate();
@@ -101,6 +101,8 @@ const PatientForm = () => {
   const handleSubmit = async (e) => {
     const password = location.state.password;
     e.preventDefault();
+    const password = location.state.password;   
+    
     if (validate()) {
       console.log('Form submitted:', formData);
       
@@ -109,7 +111,6 @@ const PatientForm = () => {
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
-      
       const response2 = await axios.post(
         `http://localhost:${PORT}/api/auth/register/patient`,
         {username,password},

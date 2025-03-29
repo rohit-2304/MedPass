@@ -55,7 +55,7 @@ function ViewDOC_d() {
 
     return (
         <div className="bg-gray-100 min-h-screen p-6">
-            <h1 className="text-2xl font-bold text-center text-blue-600 mb-6">
+            <h1 className="text-2xl font-bold text-center text-[#386641] mb-6">
                 Documents for Patients
             </h1>
 

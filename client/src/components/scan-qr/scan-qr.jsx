@@ -22,12 +22,10 @@ function Scan_Qr() {
             window.addEventListener('storage', handleStorageChange);
             handleStorageChange();
            
-    
             return () => {
                 window.removeEventListener('storage', handleStorageChange);
             };
         }, []);
-
 
   const handleClick=()=>{
     navigate(`/pt_db/${username}`);
@@ -35,7 +33,6 @@ function Scan_Qr() {
   useEffect(() => {
    
     if (!videoRef.current) return;
-
 
     const qrScanner = new QrScanner(
       videoRef.current,

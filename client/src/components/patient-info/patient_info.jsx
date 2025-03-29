@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const PatientForm = () => {
     const navigate =useNavigate();
     const PORT = import.meta.env.VITE_PORT;
     const {username}=useParams();
+    const location = useLocation();
   const [formData, setFormData] = useState({
     username:`${username}`,
     patient_name: '',
@@ -98,6 +99,7 @@ const PatientForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    const password = location.state.password;
     e.preventDefault();
     if (validate()) {
       console.log('Form submitted:', formData);
@@ -105,6 +107,12 @@ const PatientForm = () => {
       const response = await axios.post(
         `http://localhost:${PORT}/api/patients/patient_info/${username}`,
         formData,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      
+      const response2 = await axios.post(
+        `http://localhost:${PORT}/api/auth/register/patient`,
+        {username,password},
         { headers: { "Content-Type": "application/json" } }
       );
      navigate('/login/patient');

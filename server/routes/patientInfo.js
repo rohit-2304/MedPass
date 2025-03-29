@@ -24,7 +24,6 @@ router.post("/patient_info/:username", async (req, res) => {
             return res.status(400).json({ error: "Username in body does not match the route parameter." });
         }
 
-       
         if (!data.patient_name || !data.date_of_birth || !data.gender || !data.contact_info || !data.blood_group) {
             return res.status(400).json({ error: "Missing required fields. Please provide all necessary information." });
         }

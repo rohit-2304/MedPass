@@ -17,7 +17,9 @@ const PatientRegister = () => {
       setMessage('Password must be at least 6 characters long.');
       return;
     }
-    navigate(`/patient_info/${username}`);
+    navigate(`/patient_info/${username}`,{
+      state:{password:password}
+      });
   };
 
   return (

@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate,useLocation, useParams } from 'react-router-dom';
 
 const PatientForm = () => {
     const navigate =useNavigate();
     const PORT = import.meta.env.VITE_PORT;
     const {username}=useParams();
+    const location = useLocation();
   const [formData, setFormData] = useState({
     username:`${username}`,
     patient_name: '',
@@ -99,6 +100,8 @@ const PatientForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const password = location.state.password;   
+    
     if (validate()) {
       console.log('Form submitted:', formData);
       

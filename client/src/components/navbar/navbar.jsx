@@ -44,7 +44,7 @@ function Navbar() {
   const isLoggedIn = token || tokend;
 
   return (
-    <nav className="bg-white text-black border-b sticky top-0 z-50">
+    <nav className="bg-[#e4e5e4] text-black  sticky top-0 z-50 pb-2">
       <div className="container mx-auto flex justify-between items-center h-16 px-6">
         {/* Logo Section */}
         <div className="flex items-center space-x-6">
@@ -58,7 +58,7 @@ function Navbar() {
           {isLoggedIn && (
             <Link 
               to="/aboutus" 
-              className="text-lg font-medium hover:text-[#386641] transition"
+              className="text-2xl underline font-bold text-cyan-950 hover:text-[#386641] transition"
             >
               About Us
             </Link>

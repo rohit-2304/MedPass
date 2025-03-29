@@ -110,9 +110,10 @@ function Viewsummary() {
             const chatbotResponse = await axios.post(
                 "http://127.0.0.1:8001/chatbot",
                 {
-                    question: question,
-                  
-                },
+                    question : question.trim(),
+                    username : username,
+                    info : userDataResponse.data || { username: username },
+                },  
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -133,17 +134,18 @@ function Viewsummary() {
     // Render Component
     return (
         <div className="bg-gray-100 min-h-screen p-6">
-            <h1 className="text-2xl font-bold text-center text-blue-600 mb-6">
-                Summary for Patient
+            <h1 className="text-5xl font-bold text-center text-cyan-700 mb-6 p-7 ">
+                Ai Generated summary of patient documents
             </h1>
 
-            {/* Generate Summary Button */}
             <div className="flex justify-center mb-4">
+            {/* Generate Summary Button */}
+            <div className="flex justify-center mb-4 px-3">
                 <button
                     onClick={generateSummary}
                     disabled={loading}
                     className={`px-6 py-3 rounded-lg text-white ${
-                        loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-800"
+                        loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
                     } transition`}
                 >
                     {loading ? "Generating Summary..." : "Generate Summary"}
@@ -152,7 +154,7 @@ function Viewsummary() {
 
             {/* View Summary Button */}
             {viewButtonEnabled && (
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-4 px-3">
                     <button
                         onClick={fetchSummary}
                         disabled={loading}
@@ -164,15 +166,15 @@ function Viewsummary() {
                     </button>
                 </div>
             )}
+            </div>
 
             {/* Display Summary */}
             {summaryData && (
                 <div className="bg-white p-6 rounded-lg shadow mt-4">
-                    <h2 className="text-xl font-bold text-blue-600 mb-2">Summary Details</h2>
-                    <p className="text-black mb-2"><strong>ID:</strong> {summaryData.id}</p>
+                    
                    
                     <div
-                                className="text-gray-600 mb-4"
+                                className="mb-4"
                                 dangerouslySetInnerHTML={{
                                     __html: formatSummary(summaryData.summary|| "No summary available."),
                                 }}
@@ -184,7 +186,7 @@ function Viewsummary() {
             {/* Ask Your Question */}
             {summaryData && (
                 <div className="bg-white p-6 rounded-lg shadow mt-4">
-                    <h2 className="text-xl font-bold text-blue-600 mb-4">Ask Your Questions</h2>
+                    <h2 className="text-xl font-bold text-cyan-700 mb-4">Ask Your Questions</h2>
                     <textarea
                         placeholder="Type your question here..."
                         value={question}
@@ -193,7 +195,7 @@ function Viewsummary() {
                     />
                     <button
                         onClick={onAsk}
-                        className="mt-4 px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-800 transition"
+                        className="mt-4 px-6 py-2 rounded-lg bg-green-600 hover:bg-green-800 text-white transition"
                     >
                         Submit Question
                     </button>
@@ -204,7 +206,12 @@ function Viewsummary() {
             {answer && (
                 <div className="bg-white p-6 rounded-lg shadow mt-4">
                     <h2 className="text-xl font-bold text-green-600 mb-4">Chatbot Answer</h2>
-                    <p className="text-black">{answer}</p>
+                    <div
+                                className="mb-4"
+                                dangerouslySetInnerHTML={{
+                                    __html: formatSummary(answer|| "No summary available."),
+                                }}
+                            />
                 </div>
             )}
 

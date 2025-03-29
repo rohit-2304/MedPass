@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import userImage from "../../assets/user.jpg"; // Ensure the image path is correct
+import userImage from "../../assets/ape.jpg"; // Ensure the image path is correct
 
 const PatientProfile = () => {
   const navigate = useNavigate();

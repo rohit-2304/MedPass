@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import userImage from "../../assets/ape.jpg";  // Correct image import
+import userImage from "../../assets/user1.jpg";  // Correct image import
 import { UploadCloud, FileText, Scan, BrainCircuit  } from "lucide-react";
 import axios from "axios" 
 

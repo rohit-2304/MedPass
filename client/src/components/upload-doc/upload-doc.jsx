@@ -6,13 +6,13 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
-import { getFirestore,doc, setDoc } from "firebase/firestore"; 
-import { app } from "../../firebase.js";
+import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 function Upload_doc() {
   const [selectedFile, setselectedFile] = useState(null);
   const [token, setToken] = useState(null);
+  const [error, setError] = useState(false);
   const { username } = useParams();
   const navigate = useNavigate();
 
@@ -21,29 +21,16 @@ function Upload_doc() {
   
   if(token){
   e.preventDefault();
-  const db = getFirestore(app);
-  const storage = getStorage(app);
-  const myref = storageRef(storage, `${username}/${selectedFile.name}`);
-  const doctorName = e.target.DoctorName.value; // Replace with the name or id of the input
-  const description = e.target.documentDescription.value; // Textarea field
-  const illness = e.target.illness.value; // Input field
-  const fileType = e.target.fileType.value;
-  const issuedDate = e.target.issuedOn.value;
+  const formData = new FormData();
+ formData.append("username",username);
+ formData.append("doctorName",e.target.DoctorName.value);
+ formData.append("description",e.target.documentDescription.value);
+ formData.append("illness",e.target.illness.value);
+ formData.append("fileType",e.target.fileType.value);
+ formData.append("issuedDate",e.target.issuedOn.value);
+ formData.append("file",selectedFile);
   try {
-    // Wait for the file upload to complete
-    await uploadBytes(myref, selectedFile);
-    const pdfURL = await getDownloadURL(myref);
-  
-
-    await setDoc(doc(db,username, selectedFile.name),{
-      doctorName:doctorName,
-      description:description,
-      illness:illness,
-      fileName:selectedFile.name,
-      fileURL: pdfURL,
-      issuedOn:issuedDate,
-      fileType:fileType
-    });
+    const response = axios.post(`http://127.0.0.1:8001/compress`,formData)
     alert("file uploaded succesfully");
     navigate(`/pt_db/${username}`);
   } catch (error) {

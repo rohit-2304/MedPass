@@ -7,6 +7,7 @@ import axios from "axios"
 function Pt_db() {
     const navigate = useNavigate();
     const location = useLocation();
+    const [error,setError]= useState(false);
     const [token, setToken] = useState(null);
     const { username } = useParams();
     const [info,setInfo]=useState(null);
@@ -40,14 +41,21 @@ function Pt_db() {
     useEffect(()=>{
         const get_info = async () => {
             try {
-              const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
+              
+              const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`,{
+
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem("token")}`
+                }
+    
+            });
               setInfo(response.data); // Save the response data to state
             } catch (err) {
               console.error("Error fetching patient info:", err);
               setError(true); // Set error state
             }
           };
-      
+    
           get_info();
 
     },[username])

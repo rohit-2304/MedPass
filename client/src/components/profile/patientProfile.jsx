@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import userImage from "../../assets/ape.jpg"; // Ensure the image path is correct
+import userImage from "../../assets/user1.jpg"; // Ensure the image path is correct
 
 const PatientProfile = () => {
   const navigate = useNavigate();
@@ -15,7 +15,11 @@ const PatientProfile = () => {
   useEffect(() => {
     const get_info = async () => {
       try {
-        const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
+        const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`,{
+          headers:{
+            Authorization:`Bearer ${localStorage.getItem("token")}`
+          }
+        });
         setInfo(response.data); // Save the response data to state
       } catch (err) {
         console.error("Error fetching patient info:", err);

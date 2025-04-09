@@ -4,6 +4,7 @@ const Doctor = require('../Models/doctor');
 const router = express.Router();
 const QRcode   = require("qrcode");
 
+
 router.post('/register/doctor', async (req, res) => {
     try {
         const { username, password, registration_no, year, council } = req.body;
@@ -31,13 +32,13 @@ router.get('/getQr/:username',async(req,res)=>{
 })
 
 router.post('/login/doctor', async (req, res) => {
-    try {
+    try { const secret_key =  process.env.JWT_SECRET_KEY
         const { username, password } = req.body;
         const doctor = await Doctor.findOne({ username });
         if (!doctor || !await doctor.isValidPassword(password)) {
             return res.status(401).send('Invalid username or password');
         }
-        const token = jwt.sign({ id: doctor._id }, 'your_secret_token', { expiresIn: '1h' });
+        const token = jwt.sign({ id: doctor._id }, secret_key, { expiresIn: '1h' });
         res.status(200).json({ token });
     } catch (err) {
         console.error('Error in login:', err); // Log the error for debugging

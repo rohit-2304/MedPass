@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  getStorage,
-  ref as storageRef,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
-
-import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 function Upload_doc() {
   const [selectedFile, setselectedFile] = useState(null);
@@ -15,11 +8,9 @@ function Upload_doc() {
   const [error, setError] = useState(false);
   const { username } = useParams();
   const navigate = useNavigate();
-
+  const PORT = import.meta.env.VITE_PORT;
 
  const handleSubmit=async(e)=>{
-  
-  if(token){
   e.preventDefault();
   const formData = new FormData();
  formData.append("username",username);
@@ -29,21 +20,31 @@ function Upload_doc() {
  formData.append("fileType",e.target.fileType.value);
  formData.append("issuedDate",e.target.issuedOn.value);
  formData.append("file",selectedFile);
+  if(token){
   try {
-    const response = axios.post(`http://127.0.0.1:8001/compress`,formData)
+      const response = axios.post(`http://127.0.0.1:8001/compress`,formData)
+          console.log('File uploaded successfully:', response.data);
+      } catch (error) {
+          console.error('Upload failed:', error.response?.data || error.message);
+      
+  };
+    /*await setDoc(doc(db,username, selectedFile.name),{
+      doctorName:doctorName,
+      description:description,
+      illness:illness,x`
+      fileName:selectedFile.name,
+      fileURL: pdfURL,
+      issuedOn:issuedDate,
+      fileType:fileType
+    })*/;
     alert("file uploaded succesfully");
     navigate(`/pt_db/${username}`);
-  } catch (error) {
-    console.error("Error uploading file:", error);
-  }
 
-  console.log(selectedFile);}
+  }
   else{
     navigate("/login/patient");
   }
 
-   
-  
  }
 
   const handleFileUpload = (event) => {

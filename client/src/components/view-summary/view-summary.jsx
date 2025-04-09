@@ -40,8 +40,8 @@ function Viewsummary() {
     const generateSummary = async () => {
         setLoading(true); // Show loading indicator
         setViewButtonEnabled(false); // Disable view button initially
-        try {
-            // Step 1: Fetch user data via GET request
+        try { 
+        
             const userDataResponse = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
 
             // Step 2: Generate summary via POST request
@@ -72,16 +72,20 @@ function Viewsummary() {
     const fetchSummary = async () => {
         setLoading(true); // Show loading indicator
         try {
-            const db = getFirestore(app);
-            const summaryDoc = doc(db, username, "#&_summary_&#"); // Reference to the specific summary document
-            const summarySnapshot = await getDoc(summaryDoc);
+            const response = await axios.get(`http://localhost:${PORT}/api/store_op/summary/${username}`,{
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            const summarySnapshot = response.data.filter(item=>item.id.trim()==="#&_summary_&#");
 
             if (summarySnapshot.exists()) {
-                setSummaryData({ id: summarySnapshot.id, ...summarySnapshot.data() });
-                console.log("Fetched summary:", summarySnapshot.data());
+                setSummaryData({ id: summarySnapshot.id, ...summarySnapshot });
+           
             } else {
                 setError("Summary document not found.");
             }
+            console.log(summarySnapshot);
         } catch (err) {
             console.error("Error fetching summary:", err.message);
             setError("Failed to fetch the summary. Please try again later.");
@@ -100,7 +104,9 @@ function Viewsummary() {
         setLoading(true); // Show loading indicator during submission
         try {
             // Step 1: Fetch user data to include in chatbot context
-            const userDataResponse = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
+            const userDataResponse = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`,{
+                headers:`Bearer ${token}`
+            });
     
             if (!userDataResponse.data) {
                 throw new Error("No user data found."); // Handle case where user info is missing
@@ -179,7 +185,7 @@ function Viewsummary() {
                                     __html: formatSummary(summaryData.summary|| "No summary available."),
                                 }}
                             />
-                        </div>
+        </div>
                 
             )}
 

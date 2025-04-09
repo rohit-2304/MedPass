@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDocs, getFirestore, collection } from "firebase/firestore";
 import { app } from "../../firebase";
+import axios from 'axios'
 
 
 function Viewdoc() {
@@ -10,20 +11,32 @@ function Viewdoc() {
     const { username } = useParams();
     const [token,setToken]= useState(null);
     const navigate = useNavigate();
-
+    const PORT = import.meta.env.VITE_PORT;
+    const handleViewDocument = async (documentId) => {
+        try {
+            const response = await axios.get(`http://localhost:${PORT}/api/store_op/get-signed-url/${documentId}/${username}`,{
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            window.open(response.data.signedUrl, "_blank");
+        } catch (error) {
+            console.error("Error fetching secure URL:", error);
+        }
+    };
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const db = getFirestore(app);
-                const q = collection(db, username); 
-                const response = await getDocs(q);
+              /*  const db = getFirestore(app);
+                const q = collection(db, username); */
+                const response = await axios.get(`http://localhost:${PORT}/api/store_op/view-doc-p/${username}`,{
+                    headers:{
+                        Authorization:`Bearer ${localStorage.getItem("token")}`
+                    }
+                });
 
-       
                 setPdfs(
-                    response.docs.map((doc) => ({
-                        id: doc.id,
-                        ...doc.data(), 
-                    }))
+                    response.data
                 );
             } catch (error) {
                 console.error("Error fetching documents:", error);
@@ -31,7 +44,7 @@ function Viewdoc() {
                 setLoaded(true); 
             }
         };
-
+       
         fetchData();
     }, [username]);
       useEffect(() => {
@@ -92,14 +105,12 @@ function Viewdoc() {
                                 </p>
 
                                 <div className="text-left">
-                                    <a 
-                                        href={pdf.fileURL} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="inline-block bg-[#386641] text-white px-5 py-2 rounded-md hover:bg-[#6A994E] transition"
-                                    >
-                                         View Document
-                                    </a>
+                                <button onClick={() => handleViewDocument(pdf.id)} className="w-full py-3.5 bg-[#386641] hover:bg-[#2a4a30] active:bg-[#1f3a25]
+          text-white font-semibold rounded-lg shadow-md hover:shadow-lg 
+          transition-all duration-300 transform hover:-translate-y-0.5 
+          active:translate-y-0 active:scale-95">
+   View
+</button>
                                 </div>
                             </div>
                         ))}

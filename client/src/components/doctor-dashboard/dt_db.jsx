@@ -57,7 +57,7 @@ function Dt_db() {
             </div>
             <div className="p-6 flex flex-col justify-between h-80">
               <p className="text-[#6A994E] text-md leading-relaxed">
-                Access and manage your uploaded documents easily.
+               View Patients documents.
               </p>
               <div className="mt-6">
                 <button 

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { doc, setDoc } from "firebase/firestore";
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getFirestore } from "firebase/firestore"; 
-import { app } from "../../firebase.js";
+import axios from 'axios'
 
 function Assignpermission() {
    const [token, setToken] = useState(null);
    const [name, setName] = useState("");
     const  usernameD  = useParams().username; 
+    const PORT = import.meta.env.VITE_PORT;
     const  patientUserName = localStorage.getItem("username")
       const navigate = useNavigate();
       const handleNameChange=(e)=>{
@@ -42,13 +42,15 @@ function Assignpermission() {
               const expirationTime = 
                 Date.now() + 2*60*60*1000 ;
             
-             
-              
-              const db = getFirestore(app);
-               await setDoc(doc(db,usernameD,patientUserName),{
+              const response = await axios.post(`http://localhost:${PORT}/api/store_op/set_permission/${usernameD}`,
+              {
                 name:name,
                 username:patientUserName,
                 expiresAt: expirationTime,
+               },{
+                headers:{
+                  Authorization:`Bearer ${localStorage.getItem("token")}`
+                }
                })
                
               navigate(`/pt_db/${patientUserName}`)

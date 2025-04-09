@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDocs, getFirestore, collection } from "firebase/firestore";
-import { app } from "../../firebase";
+import axios from 'axios'
 
 function ViewDOC_d() {
     const navigate = useNavigate();
@@ -9,20 +8,21 @@ function ViewDOC_d() {
     const [tokend, setToken] = useState(null);
     const [loaded, setLoaded] = useState(false); // Fixed initial state
     const [pdfs, setPdfs] = useState([]); // Fixed initial state
+    const PORT = import.meta.env.VITE_PORT || 3000; 
 
     // Fetch documents from Firestore
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const db = getFirestore(app);
-                const q = collection(db, username);
-                const response = await getDocs(q);
+              
+                const response = await axios.get(`http://localhost:${PORT}/api/store_op/view-doc-d/${username}`,{
+                    headers:{
+                        Authorization:`Bearer ${localStorage.getItem("tokend")}`
+                    }
+                });
 
                 setPdfs(
-                    response.docs.map((doc) => ({
-                        id: doc.id,
-                        ...doc.data(),
-                    }))
+                  response.data
                 );
             } catch (error) {
                 console.error("Error fetching documents:", error);

@@ -99,15 +99,16 @@ const PatientForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    const password = location.state.password;
     e.preventDefault();
-    const password = location.state.password;   
+    const password = location.state.password;
+  
+  
     
     if (validate()) {
       console.log('Form submitted:', formData);
       
       const response = await axios.post(
-        `http://localhost:${PORT}/api/patients/patient_info/${username}`,
+        `http://localhost:${PORT}/api/auth/patient_info/${username}`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );

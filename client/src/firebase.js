@@ -9,7 +9,7 @@ const firebaseConfig = {
   messagingSenderId: "769252918117",
   appId: "1:769252918117:web:5b9c79cb0a08124d6a978c",
   measurementId: "G-5Y1GZM5JT4",
-  databaseURL:"https://medpass-try-default-rtdb.firebaseio.com",
+
 };
 
 

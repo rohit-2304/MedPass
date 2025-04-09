@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getDocs, getFirestore, collection } from "firebase/firestore";
-import { app } from "../../firebase";
+import axios from 'axios'
 
 function View_ParticularPatient() {
     const [pdfs, setPdfs] = useState([]);
@@ -9,7 +8,20 @@ function View_ParticularPatient() {
     const navigate = useNavigate();
     const { patient } = useParams();
     const [tokend, setToken] = useState(null);
-
+    const PORT =import.meta.env.VITE_PORT;
+    const handleViewDocument = async (documentId) => {
+        try {
+            const response = await axios.get(`http://localhost:${PORT}/api/store_op/get-signed-url/${documentId}/${patient}`,{
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem("tokend")}`
+                }
+            });
+            window.open(response.data.signedUrl, "_blank");
+        } catch (error) {
+            console.error("Error fetching secure URL:", error);
+        }
+    };
+    
     const formatSummary = (text) => {
         if (!text) return "<p>No summary available</p>";
 
@@ -32,15 +44,15 @@ function View_ParticularPatient() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const db = getFirestore(app);
-                const q = collection(db, patient);
-                const response = await getDocs(q);
+              
+                const response = await axios.get(`http://localhost:${PORT}/api/store_op/view-doc-p/${patient}`,{
+                    headers:{
+                        Authorization:`Bearer ${localStorage.getItem("tokend")}`
+                    }
+                }) ;
 
                 setPdfs(
-                    response.docs.map((doc) => ({
-                        id: doc.id,
-                        ...doc.data(),
-                    }))
+                   response.data
                 );
             } catch (error) {
                 console.error("Error fetching documents:", error);
@@ -110,9 +122,12 @@ function View_ParticularPatient() {
                                         {pdf.description || "No description available."}
                                     </p>
                                     <div>
-                                        <a href={pdf.fileURL} className="underline text-blue-800">
-                                            Click here to View
-                                        </a>
+                                    <button  onClick={() => handleViewDocument(pdf.id)} className="w-full py-3.5 bg-[#386641] hover:bg-[#2a4a30] active:bg-[#1f3a25]
+          text-white font-semibold rounded-lg shadow-md hover:shadow-lg 
+          transition-all duration-300 transform hover:-translate-y-0.5 
+          active:translate-y-0 active:scale-95 ">
+   View
+</button>
                                     </div>
                                 </div>
                             ))}

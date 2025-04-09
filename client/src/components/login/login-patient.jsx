@@ -20,7 +20,7 @@ const Login = () => {
       const response = await axios.post(`http://localhost:${PORT}/api/auth/login/patient`, { username, password });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', response.data.username);
-    
+      
       userName = response.data.username;
       setMessage('Login successful!');
       navigate(`/pt_db/${username}`);

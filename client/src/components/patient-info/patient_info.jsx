@@ -94,7 +94,7 @@ const PatientForm = () => {
 
     setErrors(newErrors);
 
-    // Return true if no errors
+ 
     return Object.keys(newErrors).length === 0;
   };
 
@@ -126,10 +126,10 @@ const PatientForm = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-green-50 to-blue-50 px-4 ">
+      
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-xl rounded-lg w-full max-w-lg p-6 space-y-4 sm:space-y-6  m-5 "
-      >
+        className="bg-white shadow-xl rounded-lg w-full max-w-lg p-6 space-y-4 sm:space-y-6  m-5 ">
         <h2 className="text-3xl font-extrabold text-[#386641] text-center">Patient Information</h2>
 
         {/* Full Name */}

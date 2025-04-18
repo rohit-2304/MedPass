@@ -3,6 +3,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import userImage from "../../assets/user1.jpg";  // Correct image import
 import { UploadCloud, FileText, Scan, BrainCircuit  } from "lucide-react";
 import axios from "axios" 
+import {jwtDecode} from 'jwt-decode';
+
 
 function Pt_db() {
     const navigate = useNavigate();
@@ -19,7 +21,33 @@ function Pt_db() {
     const handleScan = () => navigate(`/scan_qr/${username}`);
     const handleSummary = () => navigate(`/view_summary/${username}`);
 
+
+const checkAndRefreshToken = async () => {
+        const accessToken = localStorage.getItem('token');
+        const decodedToken = jwtDecode(accessToken);
+        if(!accessToken){
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            navigate("/");
+          }
+
+        if (decodedToken.exp * 1000 < Date.now()) { 
+            try {
+                console.log("hi");
+                const res = await axios.get(`http://localhost:${PORT}/api/auth/refresh-token/${username}`);
+                const data =  res.data;
+                localStorage.setItem('token', data.token);
+            } catch (error) {
+                console.error("Token refresh failed. Redirecting to login.");
+            }
+        }
+    };
+ 
+
+    
+
     useEffect(() => {
+     
         const handleStorageChange = () => {
             const newToken = localStorage.getItem('token');
             setToken(newToken);
@@ -38,8 +66,9 @@ function Pt_db() {
         };
     }, []);
 
-    useEffect(()=>{
+    useEffect(()=>{ 
         const get_info = async () => {
+            await checkAndRefreshToken();
             try {
               
               const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`,{
@@ -63,41 +92,53 @@ function Pt_db() {
         <div className="min-h-screen bg-gradient-to-b from-white to-[#ECEAE6] p-8 ">
             
             {/* Header Section */}
-            <div className="bg-[#efefef] p-8 rounded-lg shadow-md flex flex-col lg:flex-row items-center justify-between gap-10">
-                
-                {/* Left - Image */}
-                <div className="w-full lg:w-1/3 mb-6 lg:mb-0">
-                    <img 
-                        src={userImage} 
-                        alt="Medical Illustration" 
-                        className="w-full h-64 object-cover rounded-lg shadow-md"
-                    />
-                </div>
+            {/* Header Section */}
+<div className="bg-[#efefef] p-6 md:p-8 rounded-lg shadow-md flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-10">
+    
+    {/* Left - Image */}
+    <div className="w-full md:w-1/3">
+        <img 
+            src={userImage} 
+            alt="Medical Illustration" 
+            className="w-full h-auto max-h-64 object-cover rounded-lg shadow-md"
+        />
+    </div>
 
-                {/* Middle - Info */}
-                <div className="w-full lg:w-2/3 text-left lg:text-left px-6 ">
-                <ul className='text-xl'>
-                    <li className='flex py-1'><span className="text-[#386641] text-4xl font-bold ">Name : </span ><div className="text-[#040704] text-4xl ml-2 ">{info?.patient_name || "Loading..."} </div></li>
-                    <li className='flex py-1'><span  className="text-[#386641] text-4xl font-bold">Date_of_birth :</span> <div className="text-[#040704] text-4xl ml-2">{info?.date_of_birth || "Unknown"}</div> </li>
-                    <li className='flex py-1'><span  className="text-[#386641] text-4xl font-bold">Sex :</span><div className="text-[#040704] text-4xl ml-2">{info?.gender || "Unknown"}</div>  </li>
-                </ul>
-                  
-                </div>
-               
-                {/* Right - QR Scanner */}
-                <div className="w-full lg:w-1/3 flex justify-center">
-                    <div className="bg-white shadow-lg rounded-lg border border-[#6A994E] p-6 text-center hover:scale-105 transition-transform duration-300">
-                        <h3 className=" font-bold text-[#386641] mb-4 text-2xl ">QR SCANNER</h3>
-                        <p className="text-[#6A994E] text-lg">Scan QR to grant the doctor access to your medical data.</p>
-                        <button
-                            className="mt-4 bg-[#70c957] hover:bg-[#6A994E] text-white font-bold py-2 px-6 rounded transition duration-300 text-xl"
-                            onClick={handleScan}
-                        >
-                            Scan QR
-                        </button>
-                    </div>
-                </div>
-            </div>
+    {/* Middle - Info */}
+    <div className="w-full md:w-2/3 px-4 sm:px-6">
+        <ul className="text-lg md:text-xl">
+            <li className="flex flex-col md:flex-row py-1">
+                <span className="text-[#386641] text-2xl md:text-4xl font-bold">Name:</span>
+                <div className="text-[#040704] text-2xl md:text-4xl ml-0 md:ml-2">{info?.patient_name || "Loading..."}</div>
+            </li>
+
+            <li className="flex flex-col md:flex-row py-1">
+                <span className="text-[#386641] text-2xl md:text-4xl font-bold">Date of Birth:</span>
+                <div className="text-[#040704] text-2xl md:text-4xl ml-0 md:ml-2">{info?.date_of_birth || "Unknown"}</div>
+            </li>
+
+            <li className="flex flex-col md:flex-row py-1">
+                <span className="text-[#386641] text-2xl md:text-4xl font-bold">Gender:</span>
+                <div className="text-[#040704] text-2xl md:text-4xl ml-0 md:ml-2">{info?.gender || "Unknown"}</div>
+            </li>
+        </ul>
+    </div>
+
+    {/* Right - QR Scanner */}
+    <div className="w-full md:w-1/3 flex justify-center">
+        <div className="bg-white shadow-lg rounded-lg border border-[#6A994E] p-4 sm:p-6 text-center hover:scale-105 transition-transform duration-300">
+            <h3 className="font-bold text-[#386641] mb-3 sm:mb-4 text-xl sm:text-2xl">QR SCANNER</h3>
+            <p className="text-[#6A994E] text-sm sm:text-lg">Scan QR to grant the doctor access to your medical data.</p>
+            <button
+                className="mt-4 bg-[#70c957] hover:bg-[#6A994E] text-white font-bold py-2 px-4 sm:px-6 rounded transition duration-300 text-lg sm:text-xl"
+                onClick={handleScan}
+            >
+                Scan QR
+            </button>
+        </div>
+    </div>
+</div>
+
            
             <div className='grid lg:grid-cols-4 gap-10  sm:grid-cols-2 p-10'>
                 <button

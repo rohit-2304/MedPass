@@ -90,6 +90,8 @@ function View_ParticularPatient() {
 
     return (
         <div className="bg-gray-100 min-h-screen p-6">
+         
+
             <h1 className="text-2xl font-bold text-center text-[#386641] mb-6">
                 Documents for {patient}
             </h1>
@@ -139,7 +141,17 @@ function View_ParticularPatient() {
                     )}
 
                     {summaryPdf && (
+                        
                         <div className="bg-white p-4 rounded-lg shadow mt-6">
+                              <div className="text-center text-red-600 mb-4">
+    <p>
+        <strong>Disclaimer:</strong> The AI-generated summary is based on the documents uploaded and information provided by the patient. 
+        However, it may contain inaccuracies or irrelevant details due to outdated or incomplete patient data. 
+        It is not a substitute for professional medical advice, diagnosis, or treatment. 
+        Healthcare providers should verify the information with the patient and refer to the most recent medical records before making decisions.
+    </p>
+</div>
+
                             <h2 className="text-lg font-semibold text-gray-800 mb-2">
                                 Summary
                             </h2>

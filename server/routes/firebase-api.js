@@ -4,7 +4,6 @@ const multer = require("multer");
 const admin = require("firebase-admin");
 const serviceAccount = require("../firebase-service-account.json");
 const { getFirestore } = require("firebase-admin/firestore");
-const { collection } = require("../Models/user");
 
 // Initialize Firebase
 admin.initializeApp({
@@ -148,6 +147,30 @@ router.get("/get-signed-url/:documentId/:username", async (req, res) => {
         res.status(500).json({ error: "Failed to generate secure document link" });
     }
 });
+router.post("/remove_doc/:documentId/:username", async (req, res) => {
+    try {
+        const bucket = admin.storage().bucket();
+        const file = bucket.file(`${req.params.username}/${req.params.documentId}`);
+
+       
+        const [exists] = await file.exists();
+        if (!exists) {
+            return res.status(404).json({ error: "File does not exist" });
+        }
+
+        // Delete file from Firebase Storage
+        await file.delete();
+
+        const db = admin.firestore();
+        await db.collection(req.params.username).doc(req.params.documentId).delete();
+        res.json({ message: "Deleted successfully from both Storage and Firestore" });
+
+    } catch (error) {
+        console.error("Error deleting document:", error);
+        res.status(500).json({ error: "Internal Server Error", details: error.message });
+    }
+});
+
 
       
 module.exports = router;

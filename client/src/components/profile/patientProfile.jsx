@@ -11,6 +11,14 @@ const PatientProfile = () => {
   const [error, setError] = useState(false); // Error state
   const PORT = import.meta.env.VITE_PORT; // Port from environment variables
 
+  const handleUpdate=()=>{
+    navigate(`/updateProfile/${username}`,{
+      state:{
+        info
+      }
+    })
+  }
+
   // Fetch patient information
   useEffect(() => {
     const get_info = async () => {
@@ -30,6 +38,7 @@ const PatientProfile = () => {
     get_info();
   }, [PORT, username]);
 
+  
   // Token handling for session management
   useEffect(() => {
     const handleStorageChange = () => {
@@ -62,7 +71,7 @@ const PatientProfile = () => {
   // Render the profile UI
   return (
     <div className="min-h-screen bg-[#ECEAE6] flex justify-center items-center">
-      <div className="bg-[#FFFFFF] shadow-2xl rounded-2xl p-10 max-w-3xl w-full">
+      <div className="bg-white shadow-2xl rounded-2xl p-10 max-w-3xl w-full">
         <div className="flex flex-col items-center">
           <img
             src={userImage}
@@ -71,61 +80,37 @@ const PatientProfile = () => {
           />
           <h1 className="text-3xl font-bold text-[#386641] mt-4">{info?.patient_name || "Loading..."}</h1>
         </div>
-
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <p className="text-[#386641] font-semibold">Patient Name:</p>
-            <p className="text-black">{info?.patient_name || "Unknown"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Date of Birth:</p>
-            <p className="text-black">{info?.date_of_birth || "Unknown"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Gender:</p>
-            <p className="text-black">{info?.gender || "Unknown"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Contact Info:</p>
-            <p className="text-black">{info?.contact_info || "Unknown"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Medical History:</p>
-            <p className="text-black">{info?.medical_history || "No major issues"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Current Medications:</p>
-            <p className="text-black">{info?.current_medications || "None"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Allergies:</p>
-            <p className="text-black">{info?.allergies || "Unknown"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Weight:</p>
-            <p className="text-black">{info?.weight || "Unknown"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Height:</p>
-            <p className="text-black">{info?.height || "Unknown"}</p>
-          </div>
-
-          <div>
-            <p className="text-[#386641] font-semibold">Blood Group:</p>
-            <p className="text-black">{info?.blood_group || "Unknown"}</p>
-          </div>
+  
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-x-60 gap-y-4 ml-4 mr-4">
+          {[
+            { label: "Patient Name", value: info?.patient_name || "Unknown" },
+            { label: "Date of Birth", value: info?.date_of_birth || "Unknown" },
+            { label: "Gender", value: info?.gender || "Unknown" },
+            { label: "Contact Info", value: info?.contact_info || "Unknown" },
+            { label: "Medical History", value: info?.medical_history || "No major issues" },
+            { label: "Current Medications", value: info?.current_medications || "None" },
+            { label: "Allergies", value: info?.allergies || "Unknown" },
+            { label: "Weight", value: info?.weight || "Unknown" },
+            { label: "Height", value: info?.height || "Unknown" },
+            { label: "Blood Group", value: info?.blood_group || "Unknown" }
+          ].map((item, index) => (
+            <div key={index} className="flex flex-col text-left">
+              <p className="text-[#386641] font-semibold">{item.label}:</p>
+              <p className="text-black">{item.value}</p>
+            </div>
+          ))}
         </div>
+  
+        <button
+          onClick={handleUpdate}
+          className="mt-6 w-full bg-[#386641] text-white font-semibold py-2 rounded-lg hover:bg-[#6A994E] text-center focus:outline-none focus:ring-4 focus:ring-blue-300 transition"
+        >
+          Update Information
+        </button>
       </div>
     </div>
   );
+  
 };
 
 export default PatientProfile;

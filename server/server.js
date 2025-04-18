@@ -9,6 +9,7 @@ const authRoutesd = require('./routes/authd');
 const patient_info = require('./routes/patientInfo');
 const firebase_api = require('./routes/firebase-api.js');
 const authentication = require('./middleware/authentication.js')
+const docRoutes = require('./routes/authd-other.js')
 
 
 
@@ -21,6 +22,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 app.use('/api/authd',authRoutesd);
+app.use('/api/authOthers',authentication,docRoutes);
 app.use('/api/auth',authRoutes);
 app.use('/api/patients',authentication,patient_info);
 app.use('/api/store_op',authentication,firebase_api);

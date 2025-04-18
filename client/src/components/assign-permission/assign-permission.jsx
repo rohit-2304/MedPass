@@ -37,6 +37,7 @@ function Assignpermission() {
 
             const handleNo=()=>{
              window.close();
+             navigate(`/pt_db/${patientUserName}`)
             }
             const handleYes= async ()=>{
               const expirationTime = 

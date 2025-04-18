@@ -49,7 +49,8 @@ function Viewsummary() {
                 "http://127.0.0.1:8001/",
                 {
                     username: username,
-                    info: userDataResponse.data || { username: username }, // Send user info or fallback
+                    info: userDataResponse.data || { username: username }, 
+                    delete_doc:false// Send user info or fallback
                 },
                 {
                     headers: {
@@ -119,6 +120,7 @@ function Viewsummary() {
                     question : question.trim(),
                     username : username,
                     info : userDataResponse.data || { username: username },
+                  
                 },  
                 {
                     headers: {
@@ -140,10 +142,19 @@ function Viewsummary() {
     // Render Component
     return (
         <div className="bg-gray-100 min-h-screen p-6">
-            <h1 className="text-5xl font-bold text-center text-cyan-700 mb-6 p-7 ">
+            <div className='flex flex-col'>
+            <h1 className="text-5xl font-bold text-center text-cyan-700 mb-3 pt-7 ">
                 Ai Generated summary of patient documents
             </h1>
+            <div className="text-center text-red-600 mb-4">
+    <p>
+        <strong>Disclaimer:</strong> The generated summary is based entirely on the documents uploaded and the information provided during registration.
+        This AI-generated summary should not be considered a substitute for professional medical advice, diagnosis, or treatment.
+        Always consult with a qualified healthcare provider before making any medical decisions. The accuracy of the summary may vary and should be reviewed carefully.
+    </p>
+</div>
 
+            </div>
             <div className="flex justify-center mb-4">
             {/* Generate Summary Button */}
             <div className="flex justify-center mb-4 px-3">

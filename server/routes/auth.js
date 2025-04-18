@@ -60,6 +60,14 @@ router.post('/login/patient',async (req,res)=>{
         res.status(500).send('Error in login')
     }
 });
+router.get('/refresh-token/:username',async(req,res)=>{
+    const secret_key =  process.env.JWT_SECRET_KEY
+    const {username}= req.params;
+        const user = await User.findOne({username});
+        const token = jwt.sign({id:user._id},secret_key,{expiresIn:'1h'});
+        res.status(200).json({token,username});
+
+})
 
 module.exports = router;
 

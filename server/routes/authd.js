@@ -20,16 +20,7 @@ router.post('/register/doctor', async (req, res) => {
         res.status(500).send('Error registering Doctor');
     }
 });
-router.get('/getQr/:username',async(req,res)=>{
-    try{
-            const {username} = req.params;
-            const info = await Doctor.findOne({username});
 
-        res.status(200).json(info);
-    }catch(err){
-            res.status(500).json("some error while genrating qr")
-    }
-})
 
 router.post('/login/doctor', async (req, res) => {
     try { const secret_key =  process.env.JWT_SECRET_KEY
@@ -45,5 +36,13 @@ router.post('/login/doctor', async (req, res) => {
         res.status(500).send('Error in login');
     }
 });
+router.get('/refresh-token/:username',async(req,res)=>{
+    const secret_key =  process.env.JWT_SECRET_KEY
+    const {username}= req.params;
+        const user = await Doctor.findOne({username});
+        const token = jwt.sign({id:user._id},secret_key,{expiresIn:'1h'});
+        res.status(200).json({token,username});
+})
+
 
 module.exports = router;

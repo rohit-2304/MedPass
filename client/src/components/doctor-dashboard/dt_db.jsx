@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 function Dt_db() {
     const navigate = useNavigate();
@@ -9,10 +10,42 @@ function Dt_db() {
     const [tokend, setToken] = useState(null);
     const [qrImage, setqrImage] = useState(null);
     const [loaded,setLoaded] = useState("false");
-        useEffect(()=>{
+    
+      
+    
+   const checkAndRefreshToken = async () => {
+            const accessToken = localStorage.getItem('tokend');
+            const decodedToken = jwtDecode(accessToken);
+            if(!accessToken){
+              localStorage.removeItem("tokend");
+              localStorage.removeItem("username");
+              navigate("/");
+            }
+            if (decodedToken.exp * 1000 < Date.now()) { // Token expired?
+                try {console.log("hi")
+                    const res = await axios.get(`http://localhost:${PORT}/api/authd/refresh-token/${username}`);
+                    const data =  res.data;
+                   
+                    localStorage.setItem('tokend', data.token);
+                } catch (error) {
+                    console.error("Token refresh failed. Redirecting to login.");
+                   
+                }
+            }
+        };
+   
+   
+    useEffect(()=>{
             const getQrImage=async()=>{
-                const response = await axios.get(`http://localhost:${PORT}/api/authd/getQr/${username}`);
-            
+
+              await checkAndRefreshToken();
+
+                const response = await axios.get(`http://localhost:${PORT}/api/authOthers/getQr/${username}`,{
+                  headers:{
+                    Authorization:`Bearer ${localStorage.getItem("tokend")}`
+                  }
+                });
+                console.log("checking")
               setqrImage(response.data.doctorUrl);
             }
 

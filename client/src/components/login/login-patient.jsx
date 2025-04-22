@@ -3,7 +3,7 @@ import { useNavigate,Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = () => {
-  const PORT = import.meta.env.VITE_PORT;
+  const PORT = import.meta.env.VITE_NODE_PORT;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -17,7 +17,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:${PORT}/api/auth/login/patient`, { username, password });
+      const response = await axios.post(`http://localhost:${PORT}/node_server/api/auth/login/patient`, { username, password });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', response.data.username);
       

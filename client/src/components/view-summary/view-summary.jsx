@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import axios from 'axios';
-import { app } from "../../firebase";
+import { initializeApp } from "firebase/app";
 
 function Viewsummary() {
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ function Viewsummary() {
     const [error, setError] = useState(null); // State for error messages
     const [question, setQuestion] = useState(''); // State for question input
     const [answer, setAnswer] = useState(null); // State for storing chatbot answer
-    const PORT = import.meta.env.VITE_PORT || 3000; // Fallback port if undefined
+    const PORT = import.meta.env.VITE_NODE_PORT || 3000; // Fallback port if undefined
 
 
     const formatSummary = (text) => {
@@ -42,11 +42,15 @@ function Viewsummary() {
         setViewButtonEnabled(false); // Disable view button initially
         try { 
         
-            const userDataResponse = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
+            const userDataResponse = await axios.get(`http://localhost:${PORT}/node_server/api/patients/patient_get_info/${username}`,{
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem("token")}`
+                }
+            });
 
             // Step 2: Generate summary via POST request
             await axios.post(
-                "http://127.0.0.1:8001/",
+                `http://localhost:${PORT}/RAG_server/`,
                 {
                     username: username,
                     info: userDataResponse.data || { username: username }, 
@@ -73,14 +77,14 @@ function Viewsummary() {
     const fetchSummary = async () => {
         setLoading(true); // Show loading indicator
         try {
-            const response = await axios.get(`http://localhost:${PORT}/api/store_op/summary/${username}`,{
+            const response = await axios.get(`http://localhost:${PORT}/node_server/api/store_op/summary/${username}`,{
                 headers:{
                     Authorization:`Bearer ${localStorage.getItem("token")}`
                 }
             });
-            const summarySnapshot = response.data.filter(item=>item.id.trim()==="#&_summary_&#");
+            const summarySnapshot = response.data.find(item=>item.id.trim()==="#&_summary_&#");
 
-            if (summarySnapshot.exists()) {
+            if (summarySnapshot) {
                 setSummaryData({ id: summarySnapshot.id, ...summarySnapshot });
            
             } else {
@@ -105,8 +109,9 @@ function Viewsummary() {
         setLoading(true); // Show loading indicator during submission
         try {
             // Step 1: Fetch user data to include in chatbot context
-            const userDataResponse = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`,{
-                headers:`Bearer ${token}`
+            const userDataResponse = await axios.get(`http://localhost:${PORT}/node_server/api/patients/patient_get_info/${username}`,{
+                headers:
+                {  Authorization: `Bearer ${localStorage.getItem("token")}`}
             });
     
             if (!userDataResponse.data) {
@@ -115,7 +120,7 @@ function Viewsummary() {
     
             // Step 2: Send chatbot question with user data
             const chatbotResponse = await axios.post(
-                "http://127.0.0.1:8001/chatbot",
+                `http://localhost:${PORT}/RAG_server/chatbot`,
                 {
                     question : question.trim(),
                     username : username,

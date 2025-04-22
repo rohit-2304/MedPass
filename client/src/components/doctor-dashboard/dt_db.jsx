@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 
 function Dt_db() {
     const navigate = useNavigate();
-    const PORT =import.meta.env.VITE_PORT;
+    const PORT =import.meta.env.VITE_NODE_PORT;
     const {username} = useParams();
     const [tokend, setToken] = useState(null);
     const [qrImage, setqrImage] = useState(null);
@@ -23,7 +23,7 @@ function Dt_db() {
             }
             if (decodedToken.exp * 1000 < Date.now()) { // Token expired?
                 try {console.log("hi")
-                    const res = await axios.get(`http://localhost:${PORT}/api/authd/refresh-token/${username}`);
+                    const res = await axios.get(`http://localhost:${PORT}/node_server/api/authd/refresh-token/${username}`);
                     const data =  res.data;
                    
                     localStorage.setItem('tokend', data.token);
@@ -40,7 +40,7 @@ function Dt_db() {
 
               await checkAndRefreshToken();
 
-                const response = await axios.get(`http://localhost:${PORT}/api/authOthers/getQr/${username}`,{
+                const response = await axios.get(`http://localhost:${PORT}/node_server/api/authOthers/getQr/${username}`,{
                   headers:{
                     Authorization:`Bearer ${localStorage.getItem("tokend")}`
                   }

@@ -7,7 +7,7 @@ function Assignpermission() {
    const [token, setToken] = useState(null);
    const [name, setName] = useState("");
     const  usernameD  = useParams().username; 
-    const PORT = import.meta.env.VITE_PORT;
+    const PORT = import.meta.env.VITE_NODE_PORT;
     const  patientUserName = localStorage.getItem("username")
       const navigate = useNavigate();
       const handleNameChange=(e)=>{
@@ -43,7 +43,7 @@ function Assignpermission() {
               const expirationTime = 
                 Date.now() + 2*60*60*1000 ;
             
-              const response = await axios.post(`http://localhost:${PORT}/api/store_op/set_permission/${usernameD}`,
+              const response = await axios.post(`http://localhost:${PORT}/node_server/api/store_op/set_permission/${usernameD}`,
               {
                 name:name,
                 username:patientUserName,

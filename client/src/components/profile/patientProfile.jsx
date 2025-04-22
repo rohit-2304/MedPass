@@ -9,7 +9,7 @@ const PatientProfile = () => {
   const { username } = useParams(); // Dynamic route parameter
   const [info, setInfo] = useState(null); // State for patient information
   const [error, setError] = useState(false); // Error state
-  const PORT = import.meta.env.VITE_PORT; // Port from environment variables
+  const PORT = import.meta.env.VITE_NODE_PORT; // Port from environment variables
 
   const handleUpdate=()=>{
     navigate(`/updateProfile/${username}`,{
@@ -23,7 +23,7 @@ const PatientProfile = () => {
   useEffect(() => {
     const get_info = async () => {
       try {
-        const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`,{
+        const response = await axios.get(`http://localhost:${PORT}/node_server/api/patients/patient_get_info/${username}`,{
           headers:{
             Authorization:`Bearer ${localStorage.getItem("token")}`
           }

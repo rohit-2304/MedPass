@@ -8,10 +8,10 @@ function View_ParticularPatient() {
     const navigate = useNavigate();
     const { patient } = useParams();
     const [tokend, setToken] = useState(null);
-    const PORT =import.meta.env.VITE_PORT;
+    const PORT =import.meta.env.VITE_NODE_PORT;
     const handleViewDocument = async (documentId) => {
         try {
-            const response = await axios.get(`http://localhost:${PORT}/api/store_op/get-signed-url/${documentId}/${patient}`,{
+            const response = await axios.get(`http://localhost:${PORT}/node_server/api/store_op/get-signed-url/${documentId}/${patient}`,{
                 headers:{
                     Authorization:`Bearer ${localStorage.getItem("tokend")}`
                 }
@@ -45,7 +45,7 @@ function View_ParticularPatient() {
         const fetchData = async () => {
             try {
               
-                const response = await axios.get(`http://localhost:${PORT}/api/store_op/view-doc-p/${patient}`,{
+                const response = await axios.get(`http://localhost:${PORT}/node_server/api/store_op/view-doc-p/${patient}`,{
                     headers:{
                         Authorization:`Bearer ${localStorage.getItem("tokend")}`
                     }

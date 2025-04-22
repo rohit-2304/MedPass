@@ -8,14 +8,14 @@ function ViewDOC_d() {
     const [tokend, setToken] = useState(null);
     const [loaded, setLoaded] = useState(false); // Fixed initial state
     const [pdfs, setPdfs] = useState([]); // Fixed initial state
-    const PORT = import.meta.env.VITE_PORT || 3000; 
+    const PORT = import.meta.env.VITE_NODE_PORT || 3000; 
 
     // Fetch documents from Firestore
     useEffect(() => {
         const fetchData = async () => {
             try {
               
-                const response = await axios.get(`http://localhost:${PORT}/api/store_op/view-doc-d/${username}`,{
+                const response = await axios.get(`http://localhost:${PORT}/node_server/api/store_op/view-doc-d/${username}`,{
                     headers:{
                         Authorization:`Bearer ${localStorage.getItem("tokend")}`
                     }

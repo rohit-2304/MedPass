@@ -4,7 +4,7 @@ import { useNavigate,useLocation, useParams } from 'react-router-dom';
 
 const PatientForm = () => {
     const navigate =useNavigate();
-    const PORT = import.meta.env.VITE_PORT;
+    const PORT = import.meta.env.VITE_NODE_PORT;
     const {username}=useParams();
     const location = useLocation();
   const [formData, setFormData] = useState({
@@ -108,12 +108,12 @@ const PatientForm = () => {
       console.log('Form submitted:', formData);
       
       const response = await axios.post(
-        `http://localhost:${PORT}/api/auth/patient_info/${username}`,
+        `http://localhost:${PORT}/node_server/api/auth/patient_info/${username}`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
       const response2 = await axios.post(
-        `http://localhost:${PORT}/api/auth/register/patient`,
+        `http://localhost:${PORT}/node_server/api/auth/register/patient`,
         {username,password},
         { headers: { "Content-Type": "application/json" } }
       );

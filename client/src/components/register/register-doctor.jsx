@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RegisterD = () => {
-    const PORT = import.meta.env.VITE_PORT;
+    const PORT = import.meta.env.VITE_NODE_PORT;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [council, setCouncil] = useState('');
@@ -68,7 +68,7 @@ const handleRegister = async (e) => {
       console.log('Filtered Doctor:', Doctor);
 
       if (Doctor.length !== 0) {
-          const response = await axios.post('http://localhost:5000/api/authd/register/doctor',{username,password,registration_no,year,council});
+          const response = await axios.post(`http://localhost:${PORT}/node_server/api/authd/register/doctor`,{username,password,registration_no,year,council});
         
           setMessage('Registration successful!$');
           navigate('/login/doctor');

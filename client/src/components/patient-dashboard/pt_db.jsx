@@ -13,7 +13,7 @@ function Pt_db() {
     const [token, setToken] = useState(null);
     const { username } = useParams();
     const [info,setInfo]=useState(null);
-    const PORT = import.meta.env.VITE_PORT; // Port from environment variables
+    const PORT = import.meta.env.VITE_NODE_PORT; // Port from environment variables
 
 
     const handleUpload = () => navigate(`/upload_doc/${username}`);
@@ -34,7 +34,7 @@ const checkAndRefreshToken = async () => {
         if (decodedToken.exp * 1000 < Date.now()) { 
             try {
                 console.log("hi");
-                const res = await axios.get(`http://localhost:${PORT}/api/auth/refresh-token/${username}`);
+                const res = await axios.get(`http://localhost:${PORT}/node_server/api/auth/refresh-token/${username}`);
                 const data =  res.data;
                 localStorage.setItem('token', data.token);
             } catch (error) {
@@ -71,7 +71,7 @@ const checkAndRefreshToken = async () => {
             await checkAndRefreshToken();
             try {
               
-              const response = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`,{
+              const response = await axios.get(`http://localhost:${PORT}/node_server/api/patients/patient_get_info/${username}`,{
 
                 headers:{
                     Authorization:`Bearer ${localStorage.getItem("token")}`

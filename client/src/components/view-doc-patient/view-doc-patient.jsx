@@ -9,7 +9,8 @@ function Viewdoc() {
     const [token, setToken] = useState(null);
     const [pdfLength, setpdfLength] = useState(0);
     const navigate = useNavigate();
-    const PORT = import.meta.env.VITE_PORT;
+    const PORT = import.meta.env.VITE_NODE_PORT;
+    
     const [disabledButtons, setDisabledButtons] = useState({});
 
     // Filter documents early in the component
@@ -23,7 +24,7 @@ function Viewdoc() {
     const handleViewDocument = async (documentId) => {
         try {
             const response = await axios.get(
-                `http://localhost:${PORT}/api/store_op/get-signed-url/${documentId}/${username}`,
+                `http://localhost:${PORT}/node_server/api/store_op/get-signed-url/${documentId}/${username}`,
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
             window.open(response.data.signedUrl, "_blank");
@@ -39,17 +40,19 @@ function Viewdoc() {
 
         try {
             await axios.post(
-                `http://localhost:${PORT}/api/store_op/remove_doc/${documentId}/${username}`,{delete_doc:false},
+                `http://localhost:${PORT}/node_server/api/store_op/remove_doc/${documentId}/${username}`,{delete_doc:false},
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
             setpdfLength((prev) => prev - 1);
 
             try{
-            const userDataResponse = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
+            const userDataResponse = await axios.get(`http://localhost:${PORT}/node_server/api/patients/patient_get_info/${username}`,
+                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }}    
+            );
 
             //
             await axios.post(
-                "http://127.0.0.1:8001/",
+               `http://localhost:${PORT}/RAG_server/`,
                 {
                     username: username,
                     info: userDataResponse.data || { username: username }, 
@@ -75,7 +78,7 @@ function Viewdoc() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:${PORT}/api/store_op/view-doc-p/${username}`,
+                    `http://localhost:${PORT}/node_server/api/store_op/view-doc-p/${username}`,
                     { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
                 );
                 setpdfLength(response.data.length);

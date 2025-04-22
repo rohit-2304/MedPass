@@ -6,7 +6,8 @@ const UpdateProfile = () => {
   const { info } = useLocation().state;
   const [formData, setFormData] = useState(info);
   const [errors, setErrors] = useState({});
-  const PORT = import.meta.env.VITE_PORT;
+  const PORT = import.meta.env.VITE_NODE_PORT;
+  const RAG_PORT = import.meta.env.VITE_RAG_PORT;
   const { username } = useParams();
   const navigate = useNavigate();
 
@@ -90,7 +91,7 @@ const UpdateProfile = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:${PORT}/api/patients/updateProfile/${username}`,
+        `http://localhost:${PORT}/node_server/api/patients/updateProfile/${username}`,
         formData,
         {
           headers: {
@@ -101,11 +102,11 @@ const UpdateProfile = () => {
 
       );
       try{
-        const userDataResponse = await axios.get(`http://localhost:${PORT}/api/patients/patient_get_info/${username}`);
+        const userDataResponse = await axios.get(`http://localhost:${PORT}/node_server/api/patients/patient_get_info/${username}`);
 
         //
         await axios.post(
-            "http://127.0.0.1:8001/",
+            `http://localhost:${PORT}/RAG_server/`,
             {
                 username: username,
                 info: userDataResponse.data || { username: username }, 
